@@ -18,10 +18,10 @@ LIB_DEPENDS=	libgit2.so:devel/libgit2 \
 		libzstd.so:archivers/zstd
 
 USES=		cargo gmake localbase perl5 pkgconfig
-USE_PERL5=	build
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	astral-sh
+USE_PERL5=	build
 
 CARGO_CRATES=   addr2line-0.24.1 \
                 adler-1.0.2 \
@@ -526,6 +526,7 @@ CARGO_CRATES=   addr2line-0.24.1 \
 OPENSSLINC=	/usr/include
 OPENSSLLIB=	/usr/lib
 
+#PROGS=		uv uvx
 PROGS=		uv
 
 PLIST_FILES=	${PROGS:S/^/bin\//}
@@ -533,7 +534,7 @@ PLIST_FILES=	${PROGS:S/^/bin\//}
 PORTSCOUT=	limit:.*\..*$$ # prevent tags like perma-39
 
 do-install:
-	# workaround for error: found a virtual manifest at `xx` instead of a package manifest
+# workaround for error: found a virtual manifest at `xx` instead of a package manifest
 .for p in ${PROGS}
 	${INSTALL_PROGRAM} \
 		${WRKDIR}/target/*/release/${p} \
