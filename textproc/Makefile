@@ -1563,6 +1563,7 @@
     SUBDIR += py-python-pptx
     SUBDIR += py-python-slugify
     SUBDIR += py-python-ulid
+    SUBDIR += py-python-ulid2
     SUBDIR += py-python-xmp-toolkit
     SUBDIR += py-pytidylib
     SUBDIR += py-pytkdocs
