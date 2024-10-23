@@ -11,4 +11,3 @@ Mk/bsd.overlay.mk
 *.rej
 *.orig
 *.sw[p-z]
-.gitinfosparse-checkout

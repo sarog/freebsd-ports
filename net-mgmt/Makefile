@@ -294,7 +294,6 @@
     SUBDIR += pandorafms_server
     SUBDIR += pftabled
     SUBDIR += php-fpm_exporter
-    SUBDIR += php80-snmp
     SUBDIR += php81-snmp
     SUBDIR += php82-snmp
     SUBDIR += php83-snmp
