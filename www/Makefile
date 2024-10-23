@@ -91,6 +91,7 @@
     SUBDIR += calamaris-devel
     SUBDIR += caldavzap
     SUBDIR += carbonapi
+    SUBDIR += cas
     SUBDIR += castget
     SUBDIR += castor
     SUBDIR += cgi-lib
@@ -370,7 +371,6 @@
     SUBDIR += mirrorselect
     SUBDIR += mitmproxy
     SUBDIR += mknmz-wwwoffle
-    SUBDIR += mnogosearch
     SUBDIR += mod_asn
     SUBDIR += mod_auth_cas
     SUBDIR += mod_auth_cookie_mysql2
@@ -477,6 +477,7 @@
     SUBDIR += node18
     SUBDIR += node20
     SUBDIR += node22
+    SUBDIR += node23
     SUBDIR += nostromo
     SUBDIR += novnc
     SUBDIR += novnc-websockify
@@ -486,6 +487,7 @@
     SUBDIR += npm-node18
     SUBDIR += npm-node20
     SUBDIR += npm-node22
+    SUBDIR += npm-node23
     SUBDIR += oauth2-proxy
     SUBDIR += obhttpd
     SUBDIR += offpunk
@@ -1559,6 +1561,7 @@
     SUBDIR += py-django-formtools
     SUBDIR += py-django-graphiql-debug-toolbar
     SUBDIR += py-django-graphql-jwt
+    SUBDIR += py-django-graphql-jwt34
     SUBDIR += py-django-gravatar2
     SUBDIR += py-django-guardian
     SUBDIR += py-django-hashid-field
@@ -1695,6 +1698,7 @@
     SUBDIR += py-forcediphttpsadapter
     SUBDIR += py-formencode
     SUBDIR += py-fqdn
+    SUBDIR += py-frappe-bench
     SUBDIR += py-freenit
     SUBDIR += py-frozen-flask
     SUBDIR += py-gandi.cli
@@ -2560,6 +2564,7 @@
     SUBDIR += yarn-node18
     SUBDIR += yarn-node20
     SUBDIR += yarn-node22
+    SUBDIR += yarn-node23
     SUBDIR += yarr
     SUBDIR += yaws
     SUBDIR += you-get
