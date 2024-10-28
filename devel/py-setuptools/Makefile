@@ -1,6 +1,5 @@
 PORTNAME=	setuptools
-PORTVERSION=	63.1.0
-PORTREVISION=	1
+PORTVERSION=	75.1.0
 CATEGORIES=	devel python
 MASTER_SITES=	PYPI
 PKGNAMEPREFIX=	${PYTHON_PKGNAMEPREFIX}
@@ -17,7 +16,7 @@ LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 USES=		cpe python
-USE_PYTHON=	allflavors autoplist concurrent distutils
+USE_PYTHON=	allflavors autoplist concurrent pep517
 
 CPE_VENDOR=	python
 
