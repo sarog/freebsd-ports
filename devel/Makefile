@@ -4743,6 +4743,7 @@
     SUBDIR += py-dataclass-array
     SUBDIR += py-dataclasses-json
     SUBDIR += py-datadog
+    SUBDIR += py-dataflows-tabulator
     SUBDIR += py-datapackage
     SUBDIR += py-datasette
     SUBDIR += py-datatest
@@ -4972,6 +4973,7 @@
     SUBDIR += py-hatch-jupyter-builder
     SUBDIR += py-hatch-mypyc
     SUBDIR += py-hatch-nodejs-version
+    SUBDIR += py-hatch-regex-commit
     SUBDIR += py-hatch-requirements-txt
     SUBDIR += py-hatch-semver
     SUBDIR += py-hatch-vcs
@@ -5474,6 +5476,7 @@
     SUBDIR += py-prompt-toolkit
     SUBDIR += py-prompt-toolkit1
     SUBDIR += py-prompt-toolkit2
+    SUBDIR += py-propcache
     SUBDIR += py-property-cached
     SUBDIR += py-proselint
     SUBDIR += py-prospector
@@ -5795,6 +5798,7 @@
     SUBDIR += py-represent
     SUBDIR += py-requestsexceptions
     SUBDIR += py-requirements-detector
+    SUBDIR += py-requirements-parser
     SUBDIR += py-requirementslib
     SUBDIR += py-resolvelib
     SUBDIR += py-resolvelib05
@@ -6478,6 +6482,7 @@
     SUBDIR += rubygem-aws-sdk-bedrockagent
     SUBDIR += rubygem-aws-sdk-bedrockagentruntime
     SUBDIR += rubygem-aws-sdk-bedrockruntime
+    SUBDIR += rubygem-aws-sdk-billing
     SUBDIR += rubygem-aws-sdk-billingconductor
     SUBDIR += rubygem-aws-sdk-braket
     SUBDIR += rubygem-aws-sdk-budgets
@@ -6530,6 +6535,7 @@
     SUBDIR += rubygem-aws-sdk-configservice
     SUBDIR += rubygem-aws-sdk-connect
     SUBDIR += rubygem-aws-sdk-connectcampaignservice
+    SUBDIR += rubygem-aws-sdk-connectcampaignsv2
     SUBDIR += rubygem-aws-sdk-connectcases
     SUBDIR += rubygem-aws-sdk-connectcontactlens
     SUBDIR += rubygem-aws-sdk-connectparticipant
@@ -6720,6 +6726,7 @@
     SUBDIR += rubygem-aws-sdk-osis
     SUBDIR += rubygem-aws-sdk-outposts
     SUBDIR += rubygem-aws-sdk-panorama
+    SUBDIR += rubygem-aws-sdk-partnercentralselling
     SUBDIR += rubygem-aws-sdk-paymentcryptography
     SUBDIR += rubygem-aws-sdk-paymentcryptographydata
     SUBDIR += rubygem-aws-sdk-pcaconnectorad
@@ -7105,6 +7112,7 @@
     SUBDIR += rubygem-danger-gitlab
     SUBDIR += rubygem-datadog
     SUBDIR += rubygem-datadog-ci
+    SUBDIR += rubygem-datadog-ruby_core_source
     SUBDIR += rubygem-date
     SUBDIR += rubygem-ddmemoize
     SUBDIR += rubygem-ddmetrics
@@ -7139,6 +7147,7 @@
     SUBDIR += rubygem-devise-rails61
     SUBDIR += rubygem-devise-rails70
     SUBDIR += rubygem-devise-rails71
+    SUBDIR += rubygem-devise-rails72
     SUBDIR += rubygem-did_you_mean
     SUBDIR += rubygem-dig_rb
     SUBDIR += rubygem-directory_watcher
@@ -7187,6 +7196,7 @@
     SUBDIR += rubygem-faraday-excon
     SUBDIR += rubygem-faraday-excon1
     SUBDIR += rubygem-faraday_middleware-aws-sigv4
+    SUBDIR += rubygem-faraday_middleware-aws-sigv4-gitlab
     SUBDIR += rubygem-faraday_middleware-aws-sigv403
     SUBDIR += rubygem-faraday_middleware-multi_json
     SUBDIR += rubygem-fast-stemmer
@@ -7241,6 +7251,7 @@
     SUBDIR += rubygem-fuubar
     SUBDIR += rubygem-fuzzy_match
     SUBDIR += rubygem-gapic-common
+    SUBDIR += rubygem-gapic-common-gitlab
     SUBDIR += rubygem-gdata
     SUBDIR += rubygem-gem-compare
     SUBDIR += rubygem-gem_plugin
@@ -7289,7 +7300,7 @@
     SUBDIR += rubygem-google-api-client
     SUBDIR += rubygem-google-apis-admin_directory_v1
     SUBDIR += rubygem-google-apis-androidpublisher_v3
-    SUBDIR += rubygem-google-apis-androidpublisher_v3034
+    SUBDIR += rubygem-google-apis-androidpublisher_v3-gitlab
     SUBDIR += rubygem-google-apis-bigquery_v2
     SUBDIR += rubygem-google-apis-cloudbilling_v1
     SUBDIR += rubygem-google-apis-cloudkms_v1
@@ -7298,10 +7309,11 @@
     SUBDIR += rubygem-google-apis-cloudresourcemanager_v2
     SUBDIR += rubygem-google-apis-cloudresourcemanager_v3
     SUBDIR += rubygem-google-apis-compute_v1
-    SUBDIR += rubygem-google-apis-compute_v1_057
+    SUBDIR += rubygem-google-apis-compute_v1-gitlab
     SUBDIR += rubygem-google-apis-container_v1
     SUBDIR += rubygem-google-apis-container_v1beta1
     SUBDIR += rubygem-google-apis-core
+    SUBDIR += rubygem-google-apis-core-gitlab
     SUBDIR += rubygem-google-apis-core011
     SUBDIR += rubygem-google-apis-discovery_v1
     SUBDIR += rubygem-google-apis-drive_v3
@@ -7311,14 +7323,18 @@
     SUBDIR += rubygem-google-apis-iam_v2
     SUBDIR += rubygem-google-apis-iam_v2beta
     SUBDIR += rubygem-google-apis-iamcredentials_v1
+    SUBDIR += rubygem-google-apis-iamcredentials_v1-gitlab
     SUBDIR += rubygem-google-apis-monitoring_v3
+    SUBDIR += rubygem-google-apis-monitoring_v3-gitlab
     SUBDIR += rubygem-google-apis-playcustomapp_v1
     SUBDIR += rubygem-google-apis-pubsub_v1
+    SUBDIR += rubygem-google-apis-pubsub_v1-gitlab
     SUBDIR += rubygem-google-apis-serviceusage_v1
     SUBDIR += rubygem-google-apis-sheets_v4
     SUBDIR += rubygem-google-apis-sqladmin_v1beta4
-    SUBDIR += rubygem-google-apis-sqladmin_v1beta4_041
+    SUBDIR += rubygem-google-apis-sqladmin_v1beta4-gitlab
     SUBDIR += rubygem-google-apis-storage_v1
+    SUBDIR += rubygem-google-apis-storage_v1-gitlab
     SUBDIR += rubygem-google-cloud-common
     SUBDIR += rubygem-google-iam-credentials
     SUBDIR += rubygem-google-iam-credentials-v1
@@ -7412,6 +7428,7 @@
     SUBDIR += rubygem-json-canonicalization
     SUBDIR += rubygem-json-schema
     SUBDIR += rubygem-json1
+    SUBDIR += rubygem-json27
     SUBDIR += rubygem-json_pure
     SUBDIR += rubygem-json_pure1
     SUBDIR += rubygem-json_schema
@@ -7733,6 +7750,7 @@
     SUBDIR += rubygem-rubocop-ast
     SUBDIR += rubygem-rubocop-capybara
     SUBDIR += rubygem-rubocop-factory_bot
+    SUBDIR += rubygem-rubocop-minitest
     SUBDIR += rubygem-rubocop-performance
     SUBDIR += rubygem-rubocop-rails
     SUBDIR += rubygem-rubocop-rake
@@ -7951,6 +7969,7 @@
     SUBDIR += rubygem-un
     SUBDIR += rubygem-unicode
     SUBDIR += rubygem-unicode-display_width
+    SUBDIR += rubygem-unicode-display_width2
     SUBDIR += rubygem-unicode-emoji
     SUBDIR += rubygem-unicode-version
     SUBDIR += rubygem-unicode_utils
@@ -8072,7 +8091,7 @@
     SUBDIR += shtool
     SUBDIR += shunit2
     SUBDIR += sigar
-    SUBDIR += signal-fts5-extension
+    SUBDIR += signal-sqlcipher-extension
     SUBDIR += sigslot
     SUBDIR += silc-toolkit
     SUBDIR += silentbob
