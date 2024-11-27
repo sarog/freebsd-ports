@@ -829,6 +829,7 @@
     SUBDIR += git-extras
     SUBDIR += git-filter-repo
     SUBDIR += git-filter-repo-devel
+    SUBDIR += git-graph
     SUBDIR += git-gui
     SUBDIR += git-lab
     SUBDIR += git-lfs
@@ -4931,7 +4932,6 @@
     SUBDIR += py-glance-store
     SUBDIR += py-glob2
     SUBDIR += py-glom
-    SUBDIR += py-gobject3
     SUBDIR += py-goodreads
     SUBDIR += py-google-cloud-iam
     SUBDIR += py-google-crc32c
@@ -5546,6 +5546,7 @@
     SUBDIR += py-pygdbmi
     SUBDIR += py-pygit2
     SUBDIR += py-pygls
+    SUBDIR += py-pygobject
     SUBDIR += py-pygpx
     SUBDIR += py-pyhashxx
     SUBDIR += py-pyhcl
@@ -5831,6 +5832,7 @@
     SUBDIR += py-rply
     SUBDIR += py-rq
     SUBDIR += py-rq-scheduler
+    SUBDIR += py-rq1
     SUBDIR += py-rstr
     SUBDIR += py-rtree
     SUBDIR += py-rtslib-fb
@@ -6225,7 +6227,7 @@
     SUBDIR += pydeps
     SUBDIR += pyderasn
     SUBDIR += pyenv
-    SUBDIR += pygobject3-common
+    SUBDIR += pygobject-common
     SUBDIR += pylint
     SUBDIR += pylyzer
     SUBDIR += pymsteams
@@ -8206,6 +8208,7 @@
     SUBDIR += termbox
     SUBDIR += termcolor
     SUBDIR += terminality
+    SUBDIR += terraform-ls
     SUBDIR += test-drive
     SUBDIR += tevent
     SUBDIR += tex-kpathsea
