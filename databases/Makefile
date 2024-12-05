@@ -1122,7 +1122,6 @@
     SUBDIR += valkey
     SUBDIR += vfront
     SUBDIR += virtualpg
-    SUBDIR += vsqlite
     SUBDIR += webdis
     SUBDIR += wfb2sql
     SUBDIR += xapian-bindings

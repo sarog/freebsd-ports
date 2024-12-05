@@ -1499,7 +1499,6 @@
     SUBDIR += serveez
     SUBDIR += serviio
     SUBDIR += sflowtool
-    SUBDIR += shadowsocks-libev
     SUBDIR += shadowsocks-rust
     SUBDIR += shelldap
     SUBDIR += shmux
