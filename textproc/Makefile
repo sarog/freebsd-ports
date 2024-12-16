@@ -1,0 +1,11 @@
+SUBDIR += elasticsearch8
+SUBDIR += kibana8
+SUBDIR += php80-ctype
+SUBDIR += php80-dom
+SUBDIR += php80-enchant
+SUBDIR += php80-pspell
+SUBDIR += php80-simplexml
+SUBDIR += php80-xml
+SUBDIR += php80-xmlreader
+SUBDIR += php80-xmlwriter
+SUBDIR += php80-xsl

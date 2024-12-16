@@ -1,0 +1,17 @@
+SUBDIR += archivers
+SUBDIR += converters
+SUBDIR += databases
+SUBDIR += devel
+SUBDIR += ftp
+SUBDIR += graphics
+SUBDIR += lang
+SUBDIR += mail
+SUBDIR += math
+SUBDIR += misc
+SUBDIR += net
+SUBDIR += net-mgmt
+SUBDIR += net-p2p
+SUBDIR += security
+SUBDIR += sysutils
+SUBDIR += textproc
+SUBDIR += www
