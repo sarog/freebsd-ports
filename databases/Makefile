@@ -10,3 +10,4 @@ SUBDIR += php80-pdo_pgsql
 SUBDIR += php80-pdo_sqlite
 SUBDIR += php80-pgsql
 SUBDIR += php80-sqlite3
+SUBDIR += py-sqlite3

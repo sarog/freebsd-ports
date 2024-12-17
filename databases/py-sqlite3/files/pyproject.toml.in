@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools", "cython", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sqlite3"
+version = "PY_VERSION"
+
+[tool.setuptools.packages.find]
+exclude=["*"]
+
+[tool.setuptools.package-data]
+"*" = ["_sqlite3.cpython-*.so"]
+
