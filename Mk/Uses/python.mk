@@ -544,8 +544,8 @@ PYTHON_ABIVER=		# empty
 PYTHON_PORTSDIR=	${_PYTHON_RELPORTDIR}${PYTHON_SUFFIX}
 
 # Protect partial checkouts from Mk/Scripts/functions.sh:export_ports_env().
-.  if !defined(_PORTS_ENV_CHECK) || exists(${PORTSDIR}/${PYTHON_PORTSDIR})
-.include "${PORTSDIR}/${PYTHON_PORTSDIR}/Makefile.version"
+.  if !defined(_PORTS_ENV_CHECK) || exists(${OVERLAYS}/${PYTHON_PORTSDIR})
+.include "${OVERLAYS}/${PYTHON_PORTSDIR}/Makefile.version"
 .  endif
 # Create a 5 integer version string, prefixing 0 to the minor and patch
 # tokens if it's a single character. Only use the first 3 tokens of
