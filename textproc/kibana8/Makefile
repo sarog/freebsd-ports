@@ -1,5 +1,5 @@
 PORTNAME=	kibana
-DISTVERSION=	8.16.1
+DISTVERSION=	8.16.2
 DISTVERSIONSUFFIX=	-linux-x86_64
 CATEGORIES=	textproc www
 MASTER_SITES=	https://artifacts.elastic.co/downloads/kibana/ \
@@ -13,7 +13,7 @@ WWW=		https://www.elastic.co/products/kibana
 
 LICENSE=	APACHE20
 
-BUILD_DEPENDS=	npm-node18>=10.9.0:www/npm-node20
+BUILD_DEPENDS=	npm-node20>=10.8.1:www/npm-node20
 LIB_DEPENDS=	libre2.so:devel/re2 \
 		libuv.so:devel/libuv
 RUN_DEPENDS=	${LOCALBASE}/bin/node:www/node20
@@ -110,7 +110,7 @@ do-install:
 	${MKDIR} ${STAGEDIR}${WWWDIR}/node/bin
 	${LN} -s ${LOCALBASE}/bin/node ${STAGEDIR}${WWWDIR}/node/bin/node
 	${RM} ${STAGEDIR}${WWWDIR}/node_modules/re2/build/Release/re2.node
-	${MKDIR} -p ${STAGEDIR}${WWWDIR}/node_modules/re2/build/Release
+	${MKDIR} ${STAGEDIR}${WWWDIR}/node_modules/re2/build/Release
 	${INSTALL_LIB} ${_RE2DIR}/build/Release/re2.node \
 		${STAGEDIR}${WWWDIR}/node_modules/re2/build/Release/re2.node
 .for f in ${BINS}
