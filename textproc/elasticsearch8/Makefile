@@ -1,5 +1,5 @@
 PORTNAME=	elasticsearch
-PORTVERSION=	8.16.2
+PORTVERSION=	8.15.5
 CATEGORIES=	textproc java devel
 MASTER_SITES=	https://artifacts.elastic.co/downloads/${PORTNAME}/
 PKGNAMESUFFIX=	8
@@ -77,6 +77,7 @@ post-extract:
 
 post-patch:
 	${RM} ${WRKSRC}/lib/jna-*.jar
+	${RM} ${WRKSRC}/lib/elasticsearch/modules/repository-azure/jna-*.jar
 # ML plugin not supported on FreeBSD
 	${RM} -rf ${WRKSRC}/modules/x-pack/x-pack-ml
 	${RM} -rf ${WRKSRC}/jdk.app
