@@ -110,7 +110,7 @@ do-install:
 	${MKDIR} ${STAGEDIR}${WWWDIR}/node/bin
 	${LN} -s ${LOCALBASE}/bin/node ${STAGEDIR}${WWWDIR}/node/bin/node
 	${RM} ${STAGEDIR}${WWWDIR}/node_modules/re2/build/Release/re2.node
-	${MKDIR} ${STAGEDIR}${WWWDIR}/node_modules/re2/build/Release
+	${MKDIR} -p ${STAGEDIR}${WWWDIR}/node_modules/re2/build/Release
 	${INSTALL_LIB} ${_RE2DIR}/build/Release/re2.node \
 		${STAGEDIR}${WWWDIR}/node_modules/re2/build/Release/re2.node
 .for f in ${BINS}
