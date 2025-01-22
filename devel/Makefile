@@ -1,3 +1,4 @@
+SUBDIR += ghidra
 SUBDIR += php80-ffi
 SUBDIR += php80-gettext
 SUBDIR += php80-intl
