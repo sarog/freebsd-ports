@@ -17,7 +17,7 @@ USES=		compiler:c11 python:2.7+ tar:xz tk
 USE_PYTHON=	distutils autoplist allflavors
 
 DIST_SUBDIR=	python
-DISTINFO_FILE=	${PORTSDIR}/lang/python${PYTHON_SUFFIX}/distinfo
+DISTINFO_FILE=	${OVERLAYS}/lang/python${PYTHON_SUFFIX}/distinfo
 WRKSRC_SUBDIR=	Modules
 
 PYDISTUTILS_INSTALLARGS+=	--install-lib ${PYTHON_LIBDIR}/lib-dynload
