@@ -5,6 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "sqlite3"
 version = "PY_VERSION"
+description = "SQLite 3 extension to Python"
 
 [tool.setuptools.packages.find]
 exclude=["*"]

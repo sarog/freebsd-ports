@@ -13,7 +13,7 @@ except Exception as e:
 
 
 prefix = sysconfig.get_config_var('base')
-inc_dirs = [prefix + "/include", "Modules/_sqlite"]
+inc_dirs = [prefix + "/include", "../Include/internal", "Modules/_sqlite"]
 lib_dirs = [prefix + "/lib"]
 libs = ["sqlite3"]
 macros = [('MODULE_NAME', '"sqlite3"')]
