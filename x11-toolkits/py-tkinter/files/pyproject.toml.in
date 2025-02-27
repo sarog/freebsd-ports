@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools", "cython", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tkinter"
+version = "TK_VERSION"
+description = "Tk extension to Python"
+
+[tool.setuptools.packages.find]
+exclude=["*"]
+
+[tool.setuptools.package-data]
+"*" = ["_tkinter.cpython-*.so"]
