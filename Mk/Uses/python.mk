@@ -90,11 +90,11 @@
 #	cryptography_test
 #			- Depend on security/cryptography at test-time.
 #
-#	cython		- Depend on lang/cython at build-time.
+#	cython		- Depend on lang/cython3 at build-time.
 #
-#	cython_run	- Depend on lang/cython at run-time.
+#	cython_run	- Depend on lang/cython3 at run-time.
 #
-#	cython_test	- Depend on lang/cython for tests.
+#	cython_test	- Depend on lang/cython3 for tests.
 #
 #	flavors		- Force creation of flavors for Python 2 and 3 default
 #			  versions, where applicable.
@@ -625,15 +625,15 @@ TEST_DEPENDS+=	${CRYPTOGRAPHY_DEPENDS}
 
 # cython* support
 .  if defined(_PYTHON_FEATURE_CYTHON)
-BUILD_DEPENDS+=	cython-${PYTHON_VER}:lang/cython@${PY_FLAVOR}
+BUILD_DEPENDS+=	cython-${PYTHON_VER}:lang/cython3@${PY_FLAVOR}
 .  endif
 
 .  if defined(_PYTHON_FEATURE_CYTHON_RUN)
-RUN_DEPENDS+=	cython-${PYTHON_VER}:lang/cython@${PY_FLAVOR}
+RUN_DEPENDS+=	cython-${PYTHON_VER}:lang/cython3@${PY_FLAVOR}
 .  endif
 
 .  if defined(_PYTHON_FEATURE_CYTHON_TEST)
-TEST_DEPENDS+=	cython-${PYTHON_VER}:lang/cython@${PY_FLAVOR}
+TEST_DEPENDS+=	cython-${PYTHON_VER}:lang/cython3@${PY_FLAVOR}
 .  endif
 
 .  if defined(_PYTHON_FEATURE_CONCURRENT)
