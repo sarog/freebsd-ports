@@ -164,4 +164,3 @@ post-install:
 		${STAGEDIR}${PREFIX}/lib/libpython${PYTHON_VER}${ABIFLAGS}.so.1.0-gdb.py
 
 .include <bsd.port.mk>
-
