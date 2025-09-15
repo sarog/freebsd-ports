@@ -10,7 +10,7 @@
  # Path to log files:
  #
 -#path.logs: /path/to/logs
-+path.logs: /var/run/elasticsearch
++path.logs: /var/log/elasticsearch
  #
  # ----------------------------------- Memory -----------------------------------
  #

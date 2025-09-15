@@ -1,9 +1,9 @@
 PORTNAME=	elasticsearch
-PORTVERSION=	8.15.5
+PORTVERSION=	8.19.3
 CATEGORIES=	textproc java devel
 MASTER_SITES=	https://artifacts.elastic.co/downloads/${PORTNAME}/
 PKGNAMESUFFIX=	8
-DISTNAME=	${PORTNAME}-${PORTVERSION}-darwin-x86_64
+DISTNAME=	${PORTNAME}-${PORTVERSION}-freebsd-x86_64
 
 MAINTAINER=	elastic@FreeBSD.org
 COMMENT=	Distributed, RESTful search and analytics engine
@@ -15,9 +15,8 @@ BUILD_DEPENDS=	jna>0:devel/jna
 RUN_DEPENDS=	bash:shells/bash \
 		jna>0:devel/jna
 
-USES=		cpe shebangfix
-USE_JAVA=	yes
-JAVA_VERSION=	17+
+USES=		cpe shebangfix java:run
+JAVA_VERSION=	21+
 USE_RC_SUBR=	${PORTNAME}
 
 SHEBANG_FILES=	bin/elasticsearch bin/elasticsearch-certgen \
@@ -72,16 +71,9 @@ SUB_LIST=	ETCDIR=${ETCDIR} \
 		JAVA_HOME=${JAVA_HOME} \
 		BINDIR=${PREFIX}/bin
 
-post-extract:
-	${RM} -rf ${WRKSRC}/jdk.app
-
 post-patch:
-	${RM} ${WRKSRC}/lib/jna-*.jar
-	${RM} ${WRKSRC}/lib/elasticsearch/modules/repository-azure/jna-*.jar
-# ML plugin not supported on FreeBSD
-	${RM} -rf ${WRKSRC}/modules/x-pack/x-pack-ml
-	${RM} -rf ${WRKSRC}/jdk.app
-	${REINPLACE_CMD} -e 's|%%LOCALBASE%%|${LOCALBASE}|g' ${WRKSRC}/bin/elasticsearch-env
+	${RM} ${WRKSRC}/modules/repository-azure/jna-5*.jar
+	${REINPLACE_CMD} -e 's|%%LOCALBASE%%|${LOCALBASE}|g' ${WRKSRC}/config/jvm.options
 
 do-install:
 	${INSTALL} -d -m 0750 ${STAGEDIR}${PREFIX}/etc/elasticsearch
@@ -103,6 +95,7 @@ do-install:
 	${MKDIR} ${STAGEDIR}${PREFIX}/libexec/elasticsearch
 	${INSTALL} -lrs ${STAGEDIR}${ETCDIR} ${STAGEDIR}${PREFIX}/lib/elasticsearch/config
 	${LN} -s ${JAVASHAREDIR}/classes/jna.jar ${STAGEDIR}${PREFIX}/lib/elasticsearch/lib/jna-0.0.0.jar
+	${MKDIR} ${STAGEDIR}${ETCDIR}/jvm.options.d
 	${TOUCH} ${STAGEDIR}${ETCDIR}/users.sample ${STAGEDIR}${ETCDIR}/users_roles.sample
 
 do-install-DOCS-on:
