@@ -1,3 +1,3 @@
-TIMESTAMP = 1736359354
-SHA256 (elasticsearch-8.15.5-darwin-x86_64.tar.gz) = a7741541bb7fd2778f1d183b35f01f2e71af8d342b4e50a226d131d54c4363e8
-SIZE (elasticsearch-8.15.5-darwin-x86_64.tar.gz) = 471484158
+TIMESTAMP = 1758122453
+SHA256 (elasticsearch-8.19.3-freebsd-x86_64.tar.gz) = 8623aad2fe330da8aa042efac04ad104463de55f146ff736d7b698fda1917430
+SIZE (elasticsearch-8.19.3-freebsd-x86_64.tar.gz) = 287932633
