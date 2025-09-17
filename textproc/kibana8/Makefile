@@ -1,5 +1,5 @@
 PORTNAME=	kibana
-DISTVERSION=	8.15.5
+DISTVERSION=	8.19.3
 DISTVERSIONSUFFIX=	-linux-x86_64
 CATEGORIES=	textproc www
 MASTER_SITES=	https://artifacts.elastic.co/downloads/kibana/ \
@@ -8,17 +8,17 @@ PKGNAMESUFFIX=	8
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX}
 
 MAINTAINER=	elastic@FreeBSD.org
-COMMENT=	Browser based analytics and search interface to ElasticSearch
+COMMENT=	Browser based analytics and search interface to Elasticsearch
 WWW=		https://www.elastic.co/products/kibana
 
 LICENSE=	APACHE20
 
-BUILD_DEPENDS=	npm-node20>=10.8.1:www/npm-node20
+BUILD_DEPENDS=	npm-node22>=11.5.1:www/npm-node22
 LIB_DEPENDS=	libre2.so:devel/re2 \
 		libuv.so:devel/libuv
-RUN_DEPENDS=	${LOCALBASE}/bin/node:www/node20
+RUN_DEPENDS=	${LOCALBASE}/bin/node:www/node22
 
-USES=		compiler:c++17-lang cpe nodejs:20,build,run python:build
+USES=		compiler:c++17-lang cpe nodejs:22,build,run python:build
 CPE_VENDOR=	elastic
 
 USE_GITHUB=	nodefault
@@ -28,7 +28,7 @@ GH_TUPLE=	nodejs:nan:v${_NODE_NAN_VER}:node_nan \
 USE_CXXSTD=	c++17
 USE_RC_SUBR=	${PORTNAME}
 
-CONFLICTS=	kibana7
+CONFLICTS=	kibana7 kibana9
 
 WWWDIR=		${PREFIX}/www/${PORTNAME}${PKGNAMESUFFIX}
 
@@ -59,8 +59,8 @@ _RE2DIR=	${WRKDIR}/node-re2-${_NODE_RE2_VER}
 # Extra patch files must be updated whenever node-re2 changes
 _RE2PATCHES=	${PATCHDIR}/extra-node-re2-binding-gyp.patch
 
-# Directory to prune
-_DIR2DEL=	node_modules packages src/plugins x-pack/packages
+# Directories to prune
+_DIR2DEL=	node_modules
 
 post-patch:
 .for _dirdel in ${_DIR2DEL}
@@ -110,7 +110,7 @@ do-install:
 	${MKDIR} ${STAGEDIR}${WWWDIR}/node/bin
 	${LN} -s ${LOCALBASE}/bin/node ${STAGEDIR}${WWWDIR}/node/bin/node
 	${RM} ${STAGEDIR}${WWWDIR}/node_modules/re2/build/Release/re2.node
-	${MKDIR} -p ${STAGEDIR}${WWWDIR}/node_modules/re2/build/Release
+	${MKDIR} ${STAGEDIR}${WWWDIR}/node_modules/re2/build/Release
 	${INSTALL_LIB} ${_RE2DIR}/build/Release/re2.node \
 		${STAGEDIR}${WWWDIR}/node_modules/re2/build/Release/re2.node
 .for f in ${BINS}
