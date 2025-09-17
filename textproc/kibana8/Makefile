@@ -14,8 +14,8 @@ WWW=		https://www.elastic.co/products/kibana
 LICENSE=	APACHE20
 
 BUILD_DEPENDS=	npm-node22>=11.5.1:www/npm-node22
-LIB_DEPENDS=	libre2.so>=20250805:devel/re2 \
-		libuv.so>=1.51.0:devel/libuv
+LIB_DEPENDS=	libre2.so:devel/re2 \
+		libuv.so:devel/libuv
 RUN_DEPENDS=	${LOCALBASE}/bin/node:www/node22
 
 USES=		compiler:c++17-lang cpe nodejs:22,build,run python:build
