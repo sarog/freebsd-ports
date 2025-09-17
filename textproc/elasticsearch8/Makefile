@@ -16,7 +16,7 @@ RUN_DEPENDS=	bash:shells/bash \
 		jna>0:devel/jna
 
 USES=		cpe shebangfix java:run
-JAVA_VERSION=	21+
+JAVA_VERSION=	17+
 USE_RC_SUBR=	${PORTNAME}
 
 SHEBANG_FILES=	bin/elasticsearch bin/elasticsearch-certgen \
@@ -33,7 +33,7 @@ SHEBANG_FILES=	bin/elasticsearch bin/elasticsearch-certgen \
 		bin/elasticsearch-sql-cli bin/elasticsearch-syskeygen \
 		bin/elasticsearch-users
 
-CONFLICTS=	elasticsearch6 elasticsearch7
+CONFLICTS=	elasticsearch6 elasticsearch7 elasticsearch9
 
 NO_ARCH=	yes
 NO_BUILD=	yes
