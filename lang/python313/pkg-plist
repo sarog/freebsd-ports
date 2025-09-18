@@ -1753,7 +1753,7 @@ lib/python%%XYDOT%%/ensurepip/__pycache__/__main__.cpython-%%XY%%.pyc
 lib/python%%XYDOT%%/ensurepip/__pycache__/_uninstall.cpython-%%XY%%.opt-1.pyc
 lib/python%%XYDOT%%/ensurepip/__pycache__/_uninstall.cpython-%%XY%%.opt-2.pyc
 lib/python%%XYDOT%%/ensurepip/__pycache__/_uninstall.cpython-%%XY%%.pyc
-lib/python%%XYDOT%%/ensurepip/_bundled/pip-25.1.1-py3-none-any.whl
+lib/python%%XYDOT%%/ensurepip/_bundled/pip-25.2-py3-none-any.whl
 lib/python%%XYDOT%%/ensurepip/_uninstall.py
 lib/python%%XYDOT%%/enum.py
 lib/python%%XYDOT%%/filecmp.py
@@ -2847,6 +2847,9 @@ lib/python%%XYDOT%%/test/__pycache__/mp_fork_bomb.cpython-%%XY%%.pyc
 lib/python%%XYDOT%%/test/__pycache__/mp_preload.cpython-%%XY%%.opt-1.pyc
 lib/python%%XYDOT%%/test/__pycache__/mp_preload.cpython-%%XY%%.opt-2.pyc
 lib/python%%XYDOT%%/test/__pycache__/mp_preload.cpython-%%XY%%.pyc
+lib/python%%XYDOT%%/test/__pycache__/mp_preload_flush.cpython-%%XY%%.opt-1.pyc
+lib/python%%XYDOT%%/test/__pycache__/mp_preload_flush.cpython-%%XY%%.opt-2.pyc
+lib/python%%XYDOT%%/test/__pycache__/mp_preload_flush.cpython-%%XY%%.pyc
 lib/python%%XYDOT%%/test/__pycache__/multibytecodec_support.cpython-%%XY%%.opt-1.pyc
 lib/python%%XYDOT%%/test/__pycache__/multibytecodec_support.cpython-%%XY%%.opt-2.pyc
 lib/python%%XYDOT%%/test/__pycache__/multibytecodec_support.cpython-%%XY%%.pyc
@@ -4520,6 +4523,7 @@ lib/python%%XYDOT%%/test/mime.types
 lib/python%%XYDOT%%/test/mock_socket.py
 lib/python%%XYDOT%%/test/mp_fork_bomb.py
 lib/python%%XYDOT%%/test/mp_preload.py
+lib/python%%XYDOT%%/test/mp_preload_flush.py
 lib/python%%XYDOT%%/test/multibytecodec_support.py
 lib/python%%XYDOT%%/test/pickletester.py
 lib/python%%XYDOT%%/test/profilee.py
@@ -5617,6 +5621,9 @@ lib/python%%XYDOT%%/test/test_free_threading/__init__.py
 lib/python%%XYDOT%%/test/test_free_threading/__pycache__/__init__.cpython-%%XY%%.opt-1.pyc
 lib/python%%XYDOT%%/test/test_free_threading/__pycache__/__init__.cpython-%%XY%%.opt-2.pyc
 lib/python%%XYDOT%%/test/test_free_threading/__pycache__/__init__.cpython-%%XY%%.pyc
+lib/python%%XYDOT%%/test/test_free_threading/__pycache__/test_bisect.cpython-%%XY%%.opt-1.pyc
+lib/python%%XYDOT%%/test/test_free_threading/__pycache__/test_bisect.cpython-%%XY%%.opt-2.pyc
+lib/python%%XYDOT%%/test/test_free_threading/__pycache__/test_bisect.cpython-%%XY%%.pyc
 lib/python%%XYDOT%%/test/test_free_threading/__pycache__/test_code.cpython-%%XY%%.opt-1.pyc
 lib/python%%XYDOT%%/test/test_free_threading/__pycache__/test_code.cpython-%%XY%%.opt-2.pyc
 lib/python%%XYDOT%%/test/test_free_threading/__pycache__/test_code.cpython-%%XY%%.pyc
@@ -5650,6 +5657,7 @@ lib/python%%XYDOT%%/test/test_free_threading/__pycache__/test_tokenize.cpython-%
 lib/python%%XYDOT%%/test/test_free_threading/__pycache__/test_type.cpython-%%XY%%.opt-1.pyc
 lib/python%%XYDOT%%/test/test_free_threading/__pycache__/test_type.cpython-%%XY%%.opt-2.pyc
 lib/python%%XYDOT%%/test/test_free_threading/__pycache__/test_type.cpython-%%XY%%.pyc
+lib/python%%XYDOT%%/test/test_free_threading/test_bisect.py
 lib/python%%XYDOT%%/test/test_free_threading/test_code.py
 lib/python%%XYDOT%%/test/test_free_threading/test_dict.py
 lib/python%%XYDOT%%/test/test_free_threading/test_func_annotations.py
@@ -7403,8 +7411,7 @@ lib/python%%XYDOT%%/test/typinganndata/ann_module8.py
 lib/python%%XYDOT%%/test/typinganndata/ann_module9.py
 lib/python%%XYDOT%%/test/typinganndata/ann_module695.py
 lib/python%%XYDOT%%/test/typinganndata/mod_generics_cache.py
-lib/python%%XYDOT%%/test/wheeldata/setuptools-67.6.1-py3-none-any.whl
-lib/python%%XYDOT%%/test/wheeldata/wheel-0.43.0-py3-none-any.whl
+lib/python%%XYDOT%%/test/wheeldata/setuptools-79.0.1-py3-none-any.whl
 lib/python%%XYDOT%%/test/win_console_handler.py
 lib/python%%XYDOT%%/test/xmltestdata/c14n-20/README
 lib/python%%XYDOT%%/test/xmltestdata/c14n-20/c14nComment.xml
