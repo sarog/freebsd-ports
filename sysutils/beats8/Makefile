@@ -1,6 +1,6 @@
 PORTNAME=	beats
 DISTVERSIONPREFIX=	v
-DISTVERSION=	8.16.1
+DISTVERSION=	8.19.4
 CATEGORIES=	sysutils
 MASTER_SITES=	https://raw.githubusercontent.com/${GH_ACCOUNT}/${GH_PROJECT}/${DISTVERSIONFULL}/:gomod
 PKGNAMESUFFIX?=	8
@@ -24,7 +24,7 @@ CGO_CFLAGS=	-I.
 CGO_LDFLAGS=	-L.
 MAKE_ENV+=	GOBUILD_FLAGS="-mod=vendor"
 
-CONFLICTS=	beats6 beats7
+CONFLICTS=	beats6 beats7 beats9
 
 PORTSCOUT=	limit:^8
 
