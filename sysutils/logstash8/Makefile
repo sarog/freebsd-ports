@@ -1,5 +1,5 @@
 PORTNAME=	logstash
-PORTVERSION=	8.15.1
+PORTVERSION=	8.19.4
 DISTVERSIONSUFFIX=	-darwin-x86_64
 CATEGORIES=	sysutils java
 MASTER_SITES=	https://artifacts.elastic.co/downloads/logstash/
@@ -15,17 +15,16 @@ ONLY_FOR_ARCHS=	aarch64 amd64
 
 RUN_DEPENDS=	${LOCALBASE}/bin/bash:shells/bash
 
-USES=		cpe shebangfix
+USES=		cpe shebangfix java:run
 
 CPE_VENDOR=	elastic
-USE_JAVA=	yes
 JAVA_VERSION=	17+
 JAVA_RUN=	yes
 USE_RC_SUBR=	logstash
 
 SHEBANG_FILES=	bin/*
 
-CONFLICTS=	logstash6 logstash7
+CONFLICTS=	logstash6 logstash7 logstash9
 
 NO_BUILD=	yes
 
@@ -72,15 +71,16 @@ do-install:
 		${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/ruby/gems/shared/gems \
 		-type d -empty -delete
 	${INSTALL} -lrs ${STAGEDIR}${ETCDIR} ${STAGEDIR}${LOGSTASH_HOME}/config
-	${RM} -rf ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/jni
-	${RM} -rf ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/tmp
-	${MKDIR} ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/jni
-	(cd ${WRKSRC}/vendor/jruby/tmp/lib/jni && \
-	 ${COPYTREE_SHARE} ${ARCH:S/amd64/x86_64/}-FreeBSD \
-	 ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/jni)
+	# ${RM} -rf ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/jni
+	# ${RM} -rf ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/tmp
+	#${MKDIR} ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/jni
+	#(cd ${WRKSRC}/vendor/jruby/lib/jni && \
+	# ${COPYTREE_SHARE} ${ARCH:S/amd64/x86_64/}-FreeBSD \
+	# ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/jni)
 
 post-install:
 	${ECHO} "@sample ${ETCDIR}/logstash.conf.sample" >> ${TMPPLIST}
+	## todo: ${ECHO} "@mode 0555 " >> ${TMPLIST}
 .for x in ${LOGSTASH_CONF_FILES}
 	${ECHO} "@sample ${ETCDIR}/${x}.sample" >> ${TMPPLIST}
 .endfor

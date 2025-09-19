@@ -20,16 +20,15 @@
 #   Logstash configuration path.
 #
 # logstash_log (bool):
-#   Set to "NO" by default.
-#   Set it to "YES" to enable logstash logging to file
-#   Default output to /var/log/logstash.log
+#   Set to "YES" by default.
+#   Set it to "YES" to enable logstash logging to file.
 #
-# logstash_log_file (string):
-#   Default value: "${logdir}/${name}.log"
-#   Log file path.
+# logstash_log_dir (string):
+#   Default value: "${logdir}/${name}"
+#   Default output to /var/log/logstash/
 #
 # logstash_java_home (string):
-#   Default value: "/usr/local/openjdk8"
+#   Default value: "%%JAVA_HOME%%"
 #   Root directory of the desired Java SDK.
 #   The JAVA_HOME environment variable is set with the contents of this
 #   variable.
@@ -112,10 +111,7 @@ configtest()
 {
     echo "${name} configtest:"
     echo "WARNING: this does not check validity of Grok patterns!"
-    echo "WARNING: this does not check validity of Grok patterns!"
-    echo "WARNING: this does not check validity of Grok patterns!"
     ${logstash_cmd} --path.settings ${logstash_config} --config.test_and_exit
 }
-
 
 run_rc_command "$1"
