@@ -1,13 +1,13 @@
 PORTNAME=	beats
 DISTVERSIONPREFIX=	v
-DISTVERSION=	8.19.4
+DISTVERSION=	8.19.5
 CATEGORIES=	sysutils
 MASTER_SITES=	https://raw.githubusercontent.com/${GH_ACCOUNT}/${GH_PROJECT}/${DISTVERSIONFULL}/:gomod
 PKGNAMESUFFIX?=	8
 DISTFILES=	go.mod:gomod
 
 MAINTAINER=	elastic@FreeBSD.org
-COMMENT=	Send logs, network, metrics and heartbeat to elasticsearch or logstash
+COMMENT=	Send logs, network, metrics and heartbeat to Elasticsearch or Logstash
 WWW=		https://www.elastic.co/products/beats/
 
 LICENSE=	APACHE20
