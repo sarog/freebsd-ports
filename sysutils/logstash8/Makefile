@@ -18,7 +18,7 @@ RUN_DEPENDS=	${LOCALBASE}/bin/bash:shells/bash
 USES=		cpe shebangfix java:run
 
 CPE_VENDOR=	elastic
-JAVA_VERSION=	17+
+JAVA_VERSION=	21+
 JAVA_RUN=	yes
 USE_RC_SUBR=	logstash
 
@@ -73,14 +73,13 @@ do-install:
 	${INSTALL} -lrs ${STAGEDIR}${ETCDIR} ${STAGEDIR}${LOGSTASH_HOME}/config
 	# ${RM} -rf ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/jni
 	# ${RM} -rf ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/tmp
-	#${MKDIR} ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/jni
-	#(cd ${WRKSRC}/vendor/jruby/lib/jni && \
-	# ${COPYTREE_SHARE} ${ARCH:S/amd64/x86_64/}-FreeBSD \
-	# ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/jni)
+	# ${MKDIR} ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/jni
+	# (cd ${WRKSRC}/vendor/jruby/lib/jni && \
+	#  ${COPYTREE_SHARE} ${ARCH:S/amd64/x86_64/}-FreeBSD \
+	#  ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/jni)
 
 post-install:
 	${ECHO} "@sample ${ETCDIR}/logstash.conf.sample" >> ${TMPPLIST}
-	## todo: ${ECHO} "@mode 0555 " >> ${TMPLIST}
 .for x in ${LOGSTASH_CONF_FILES}
 	${ECHO} "@sample ${ETCDIR}/${x}.sample" >> ${TMPPLIST}
 .endfor
