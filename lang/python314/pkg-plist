@@ -6882,6 +6882,9 @@ lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/__init__.cpython-%%XY%%.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/__main__.cpython-%%XY%%.opt-1.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/__main__.cpython-%%XY%%.opt-2.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/__main__.cpython-%%XY%%.pyc
+lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/eio_test_script.cpython-%%XY%%.opt-1.pyc
+lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/eio_test_script.cpython-%%XY%%.opt-2.pyc
+lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/eio_test_script.cpython-%%XY%%.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/support.cpython-%%XY%%.opt-1.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/support.cpython-%%XY%%.opt-2.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/support.cpython-%%XY%%.pyc
@@ -6915,6 +6918,7 @@ lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/test_utils.cpython-%%XY%%.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/test_windows_console.cpython-%%XY%%.opt-1.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/test_windows_console.cpython-%%XY%%.opt-2.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/test_windows_console.cpython-%%XY%%.pyc
+lib/python%%XYDOT%%/test/test_pyrepl/eio_test_script.py
 lib/python%%XYDOT%%/test/test_pyrepl/support.py
 lib/python%%XYDOT%%/test/test_pyrepl/test_eventqueue.py
 lib/python%%XYDOT%%/test/test_pyrepl/test_input.py
