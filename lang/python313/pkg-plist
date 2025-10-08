@@ -2844,6 +2844,9 @@ lib/python%%XYDOT%%/test/__pycache__/mock_socket.cpython-%%XY%%.pyc
 lib/python%%XYDOT%%/test/__pycache__/mp_fork_bomb.cpython-%%XY%%.opt-1.pyc
 lib/python%%XYDOT%%/test/__pycache__/mp_fork_bomb.cpython-%%XY%%.opt-2.pyc
 lib/python%%XYDOT%%/test/__pycache__/mp_fork_bomb.cpython-%%XY%%.pyc
+lib/python%%XYDOT%%/test/__pycache__/mp_preload_main.cpython-%%XY%%.opt-1.pyc
+lib/python%%XYDOT%%/test/__pycache__/mp_preload_main.cpython-%%XY%%.opt-2.pyc
+lib/python%%XYDOT%%/test/__pycache__/mp_preload_main.cpython-%%XY%%.pyc
 lib/python%%XYDOT%%/test/__pycache__/mp_preload.cpython-%%XY%%.opt-1.pyc
 lib/python%%XYDOT%%/test/__pycache__/mp_preload.cpython-%%XY%%.opt-2.pyc
 lib/python%%XYDOT%%/test/__pycache__/mp_preload.cpython-%%XY%%.pyc
@@ -4522,6 +4525,7 @@ lib/python%%XYDOT%%/test/memory_watchdog.py
 lib/python%%XYDOT%%/test/mime.types
 lib/python%%XYDOT%%/test/mock_socket.py
 lib/python%%XYDOT%%/test/mp_fork_bomb.py
+lib/python%%XYDOT%%/test/mp_preload_main.py
 lib/python%%XYDOT%%/test/mp_preload.py
 lib/python%%XYDOT%%/test/mp_preload_flush.py
 lib/python%%XYDOT%%/test/multibytecodec_support.py
@@ -6632,6 +6636,9 @@ lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/__init__.cpython-%%XY%%.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/__main__.cpython-%%XY%%.opt-1.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/__main__.cpython-%%XY%%.opt-2.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/__main__.cpython-%%XY%%.pyc
+lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/eio_test_script.cpython-%%XY%%.opt-1.pyc
+lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/eio_test_script.cpython-%%XY%%.opt-2.pyc
+lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/eio_test_script.cpython-%%XY%%.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/support.cpython-%%XY%%.opt-1.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/support.cpython-%%XY%%.opt-2.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/support.cpython-%%XY%%.pyc
@@ -6662,6 +6669,7 @@ lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/test_utils.cpython-%%XY%%.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/test_windows_console.cpython-%%XY%%.opt-1.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/test_windows_console.cpython-%%XY%%.opt-2.pyc
 lib/python%%XYDOT%%/test/test_pyrepl/__pycache__/test_windows_console.cpython-%%XY%%.pyc
+lib/python%%XYDOT%%/test/test_pyrepl/eio_test_script.py
 lib/python%%XYDOT%%/test/test_pyrepl/support.py
 lib/python%%XYDOT%%/test/test_pyrepl/test_eventqueue.py
 lib/python%%XYDOT%%/test/test_pyrepl/test_input.py
