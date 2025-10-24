@@ -1,5 +1,5 @@
 PORTNAME=	logstash
-PORTVERSION=	8.19.5
+PORTVERSION=	8.19.6
 DISTVERSIONSUFFIX=	-darwin-x86_64
 CATEGORIES=	sysutils java
 MASTER_SITES=	https://artifacts.elastic.co/downloads/logstash/
@@ -24,7 +24,7 @@ USE_RC_SUBR=	logstash
 
 SHEBANG_FILES=	bin/*
 
-CONFLICTS=	logstash6 logstash7 logstash9
+CONFLICTS=	logstash6 logstash7 logstash91 logstash92
 
 NO_BUILD=	yes
 
