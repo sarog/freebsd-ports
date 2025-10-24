@@ -1,5 +1,5 @@
 PORTNAME=	elasticsearch
-PORTVERSION=	8.19.5
+PORTVERSION=	8.19.6
 CATEGORIES=	textproc java devel
 MASTER_SITES=	https://github.com/portsbuild/${PORTNAME}/releases/download/v${PORTVERSION}/
 PKGNAMESUFFIX=	8
@@ -33,7 +33,7 @@ SHEBANG_FILES=	bin/elasticsearch bin/elasticsearch-certgen \
 		bin/elasticsearch-sql-cli bin/elasticsearch-syskeygen \
 		bin/elasticsearch-users
 
-CONFLICTS=	elasticsearch6 elasticsearch7 elasticsearch9
+CONFLICTS=	elasticsearch6 elasticsearch7 elasticsearch91 elasticsearch92
 
 NO_ARCH=	yes
 NO_BUILD=	yes
