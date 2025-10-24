@@ -1,5 +1,5 @@
 PORTNAME=	kibana
-DISTVERSION=	8.19.5
+DISTVERSION=	8.19.6
 DISTVERSIONSUFFIX=	-linux-x86_64
 CATEGORIES=	textproc www
 MASTER_SITES=	https://artifacts.elastic.co/downloads/kibana/ \
@@ -28,7 +28,7 @@ GH_TUPLE=	nodejs:nan:v${_NODE_NAN_VER}:node_nan \
 USE_CXXSTD=	c++17
 USE_RC_SUBR=	${PORTNAME}
 
-CONFLICTS=	kibana7 kibana9
+CONFLICTS=	kibana7 kibana91 kibana92
 
 WWWDIR=		${PREFIX}/www/${PORTNAME}${PKGNAMESUFFIX}
 
