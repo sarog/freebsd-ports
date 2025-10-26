@@ -1,5 +1,5 @@
 PORTNAME=	elasticsearch
-PORTVERSION=	9.1.5
+PORTVERSION=	9.1.6
 CATEGORIES=	textproc java devel
 MASTER_SITES=	https://github.com/portsbuild/${PORTNAME}/releases/download/v${PORTVERSION}/
 PKGNAMESUFFIX=	91
