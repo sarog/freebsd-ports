@@ -1,5 +1,6 @@
 SUBDIR += elasticsearch8
 SUBDIR += elasticsearch91
+SUBDIR += elasticsearch92
 SUBDIR += kibana8
 SUBDIR += php80-ctype
 SUBDIR += php80-dom
