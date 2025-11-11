@@ -42,7 +42,7 @@ BINS=		elasticsearch elasticsearch-certgen elasticsearch-certutil \
 		elasticsearch-sql-cli elasticsearch-sql-cli-${PORTVERSION}.jar \
 		elasticsearch-syskeygen elasticsearch-users
 
-PORTDOCS=	LICENSE.txt NOTICE.txt README.asciidoc
+PORTDOCS=	LICENSE.txt NOTICE.txt
 
 SIGAR_ARCH=	${ARCH:S|i386|x86|}
 SEARCHUSER?=	elasticsearch
