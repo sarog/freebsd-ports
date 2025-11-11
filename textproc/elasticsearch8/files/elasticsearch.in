@@ -46,6 +46,8 @@ command_args="-d --pidfile=${pidfile}"
 export ES_PATH_CONF=${elasticsearch_config}
 export ES_JAVA_HOME=${elasticsearch_java_home}
 
+PATH=%%PREFIX%%/bin:"$PATH"
+
 elasticsearch_precmd()
 {
     /usr/bin/install -d -o ${elasticsearch_user} -g ${elasticsearch_group} -m 755 ${pidfile%/*}
