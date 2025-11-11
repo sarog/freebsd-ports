@@ -1,7 +1,7 @@
 PORTNAME=	elasticsearch
-PORTVERSION=	9.2.0
+PORTVERSION=	9.2.1
 CATEGORIES=	textproc java devel
-MASTER_SITES=	https://github.com/portsbuild/${PORTNAME}/releases/download/v${PORTVERSION}/
+MASTER_SITES=	https://github.com/portsbuild/${PORTNAME}/releases/download/v${PORTVERSION}a/
 PKGNAMESUFFIX=	92
 DISTNAME=	${PORTNAME}-${PORTVERSION}-freebsd-x86_64
 
