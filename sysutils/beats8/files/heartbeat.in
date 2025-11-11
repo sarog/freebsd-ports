@@ -29,7 +29,6 @@ load_rc_config $name
 : ${heartbeat_logs:="/var/log/beats"}
 : ${heartbeat_data:="/var/db/beats/heartbeat"}
 
-
 # daemon
 start_precmd=heartbeat_prestart
 command=/usr/sbin/daemon
