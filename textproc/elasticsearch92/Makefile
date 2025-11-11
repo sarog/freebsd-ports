@@ -15,23 +15,9 @@ BUILD_DEPENDS=	jna>0:devel/jna
 RUN_DEPENDS=	bash:shells/bash \
 		jna>0:devel/jna
 
-USES=		cpe shebangfix java:run
+USES=		cpe java:run
 JAVA_VERSION=	21+
 USE_RC_SUBR=	${PORTNAME}
-
-SHEBANG_FILES=	bin/elasticsearch bin/elasticsearch-certgen \
-		bin/elasticsearch-certutil bin/elasticsearch-cli \
-		bin/elasticsearch-create-enrollment-token \
-		bin/elasticsearch-croneval bin/elasticsearch-env \
-		bin/elasticsearch-env-from-file bin/elasticsearch-geoip \
-		bin/elasticsearch-keystore bin/elasticsearch-node \
-		bin/elasticsearch-plugin bin/elasticsearch-reconfigure-node \
-		bin/elasticsearch-reset-password \
-		bin/elasticsearch-saml-metadata \
-		bin/elasticsearch-service-tokens \
-		bin/elasticsearch-setup-passwords bin/elasticsearch-shard \
-		bin/elasticsearch-sql-cli bin/elasticsearch-syskeygen \
-		bin/elasticsearch-users
 
 CONFLICTS=	elasticsearch6 elasticsearch7 elasticsearch8 elasticsearch91
 
