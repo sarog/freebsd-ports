@@ -12,7 +12,7 @@
 #   Flag that determines whether Logstash is enabled.
 #
 # logstash_home (string):
-#   Default value: "%%PREFIX%%"
+#   Default value: "%%LOGSTASH_HOME%%"
 #   Logstash installation directory.
 #
 # logstash_config (string):
