@@ -14,6 +14,6 @@
 +## Path to native libraries
 +-Des.nativelibs.path=%%LOCALBASE%%/lib
 +
-+## Disable vector library (libvec.so) as it's currently unsupported on FreeBSD
++## Enabling the vector library (libvec.so) requires additional steps on FreeBSD
 +-Dorg.elasticsearch.nativeaccess.enableVectorLibrary=false
 +
