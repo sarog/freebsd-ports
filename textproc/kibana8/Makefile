@@ -1,7 +1,7 @@
 PORTNAME=	kibana
 DISTVERSION=	8.19.7
 DISTVERSIONSUFFIX=	-linux-x86_64
-PORTREVISION=	1
+PORTREVISION=	2
 CATEGORIES=	textproc www
 MASTER_SITES=	https://artifacts.elastic.co/downloads/kibana/ \
 		http://artifacts.elastic.co/downloads/kibana/
@@ -108,8 +108,8 @@ do-install:
 		${COPYTREE_SHARE} . ${STAGEDIR}${WWWDIR} && \
 		${COPYTREE_BIN} bin ${STAGEDIR}${WWWDIR})
 	${INSTALL} -lrs ${STAGEDIR}${ETCDIR} ${STAGEDIR}${WWWDIR}/config
-	${MKDIR} ${STAGEDIR}${WWWDIR}/node/bin
-	${LN} -s ${LOCALBASE}/bin/node ${STAGEDIR}${WWWDIR}/node/bin/node
+	${MKDIR} ${STAGEDIR}${WWWDIR}/node/glibc-217/bin
+	${LN} -s ${LOCALBASE}/bin/node ${STAGEDIR}${WWWDIR}/node/glibc-217/bin/node
 	${RM} ${STAGEDIR}${WWWDIR}/node_modules/re2/build/Release/re2.node
 	${MKDIR} ${STAGEDIR}${WWWDIR}/node_modules/re2/build/Release
 	${INSTALL_LIB} ${_RE2DIR}/build/Release/re2.node \
