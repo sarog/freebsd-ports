@@ -1,0 +1,11 @@
+--- bin/kibana.orig	2025-11-12 15:44:12 UTC
++++ bin/kibana
+@@ -28,7 +28,7 @@ fi
+   KBN_NODE_OPTS="$(grep -v ^# < ${CONFIG_DIR}/node.options | xargs)"
+ fi
+ 
+-NODE="${DIR}/node/glibc-217/bin/node"
++NODE="${DIR}/node/bin/node"
+ test_node
+ 
+ # Enable capturing heap snapshots. See https://nodejs.org/api/cli.html#--heapsnapshot-signalsignal
