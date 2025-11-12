@@ -33,7 +33,7 @@ CONFLICTS=	kibana7 kibana8 kibana92
 
 WWWDIR=		${PREFIX}/www/${PORTNAME}${PKGNAMESUFFIX}
 
-PORTSCOUT=	limit:^9\.1\.\d{2}
+PORTSCOUT=	limit:^9\.1\.\d{1}
 
 SUB_FILES=	pkg-deinstall pkg-message
 SUB_LIST+=	BINDIR=${PREFIX}/bin \
