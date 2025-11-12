@@ -1,0 +1,15 @@
+TIMESTAMP = 1762983742
+SHA256 (go/sysutils_beats91/elastic-beats-v9.1.7_GH0/go.mod) = 42f8f13a632f6f5501b7f8bf34968797bec4b09e7760176be000bcd4352b2d10
+SIZE (go/sysutils_beats91/elastic-beats-v9.1.7_GH0/go.mod) = 28162
+SHA256 (go/sysutils_beats91/elastic-beats-v9.1.7_GH0/auditbeat-9.1.7-darwin-x86_64.tar.gz) = 4c2e7f7ff7a5d2ec7b69a22a8ed2e21eba2410038d6278aca6392b2390802efd
+SIZE (go/sysutils_beats91/elastic-beats-v9.1.7_GH0/auditbeat-9.1.7-darwin-x86_64.tar.gz) = 35003212
+SHA256 (go/sysutils_beats91/elastic-beats-v9.1.7_GH0/filebeat-9.1.7-darwin-x86_64.tar.gz) = 7bb08e78d31d6d31f3d1e9b1b5317a1c74d1b6c21101765bf9cab9378434a127
+SIZE (go/sysutils_beats91/elastic-beats-v9.1.7_GH0/filebeat-9.1.7-darwin-x86_64.tar.gz) = 54686624
+SHA256 (go/sysutils_beats91/elastic-beats-v9.1.7_GH0/heartbeat-9.1.7-darwin-x86_64.tar.gz) = 4824f0f3689cb203458e5650bcd84d7dda5d2cc90db79f570f4d20b189e3ab15
+SIZE (go/sysutils_beats91/elastic-beats-v9.1.7_GH0/heartbeat-9.1.7-darwin-x86_64.tar.gz) = 34764857
+SHA256 (go/sysutils_beats91/elastic-beats-v9.1.7_GH0/metricbeat-9.1.7-darwin-x86_64.tar.gz) = 21d735a12bb90c7c69ae9549ea2791d99a5bb87b52d5e32b990569f4ab011a89
+SIZE (go/sysutils_beats91/elastic-beats-v9.1.7_GH0/metricbeat-9.1.7-darwin-x86_64.tar.gz) = 58763514
+SHA256 (go/sysutils_beats91/elastic-beats-v9.1.7_GH0/packetbeat-9.1.7-darwin-x86_64.tar.gz) = 4e233a7b6f886ad37c8a6e6c6e1d56238aee6a29126a2221e0482f5b371377f7
+SIZE (go/sysutils_beats91/elastic-beats-v9.1.7_GH0/packetbeat-9.1.7-darwin-x86_64.tar.gz) = 35990913
+SHA256 (go/sysutils_beats91/elastic-beats-v9.1.7_GH0/elastic-beats-v9.1.7_GH0.tar.gz) = 5cd2c71e6541c75ccdb91403fbe11c3fc2631cfeddd4c5ce2089a0e98ae37d37
+SIZE (go/sysutils_beats91/elastic-beats-v9.1.7_GH0/elastic-beats-v9.1.7_GH0.tar.gz) = 99539201
