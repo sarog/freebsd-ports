@@ -71,12 +71,6 @@ do-install:
 		${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/ruby/gems/shared/gems \
 		-type d -empty -delete
 	${INSTALL} -lrs ${STAGEDIR}${ETCDIR} ${STAGEDIR}${LOGSTASH_HOME}/config
-	# ${RM} -rf ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/jni
-	# ${RM} -rf ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/tmp
-	# ${MKDIR} ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/jni
-	# (cd ${WRKSRC}/vendor/jruby/lib/jni && \
-	#  ${COPYTREE_SHARE} ${ARCH:S/amd64/x86_64/}-FreeBSD \
-	#  ${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/jni)
 
 post-install:
 	${ECHO} "@sample ${ETCDIR}/logstash.conf.sample" >> ${TMPPLIST}
