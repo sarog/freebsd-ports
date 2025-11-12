@@ -19,7 +19,7 @@ GH_ACCOUNT=	elastic
 
 USE_RC_SUBR=	${GO_TARGET:C,\./,,g}
 
-GO_MODULE=	github.com/elastic/beats/v8
+GO_MODULE=	github.com/elastic/beats/v7
 CGO_CFLAGS=	-I.
 CGO_LDFLAGS=	-L.
 MAKE_ENV+=	GOBUILD_FLAGS="-mod=vendor"
