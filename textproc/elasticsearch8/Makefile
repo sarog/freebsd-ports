@@ -1,8 +1,8 @@
 PORTNAME=	elasticsearch
-PORTVERSION=	8.19.7
-PORTREVISION=	1
+DISTVERSIONPREFIX=	v
+PORTVERSION=	8.19.8
 CATEGORIES=	textproc java devel
-MASTER_SITES=	https://github.com/portsbuild/${PORTNAME}/releases/download/v${PORTVERSION}/
+MASTER_SITES=	https://github.com/portsbuild/${PORTNAME}/releases/download/${DISTVERSIONFULL}/
 PKGNAMESUFFIX=	8
 DISTNAME=	${PORTNAME}-${PORTVERSION}-freebsd-x86_64
 
