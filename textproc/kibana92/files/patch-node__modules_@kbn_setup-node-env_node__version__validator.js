@@ -1,6 +1,6 @@
---- src/setup_node_env/node_version_validator.js.orig	2025-11-12 16:09:54 UTC
-+++ src/setup_node_env/node_version_validator.js
-@@ -16,14 +16,14 @@ if (!process.env.UNSAFE_DISABLE_NODE_VERSION_VALIDATIO
+--- node_modules/@kbn/setup-node-env/node_version_validator.js.orig	2025-12-30 21:25:44 UTC
++++ node_modules/@kbn/setup-node-env/node_version_validator.js
+@@ -21,14 +21,14 @@ if (!process.env.UNSAFE_DISABLE_NODE_VERSION_VALIDATIO
    var currentVersion = process && process.version || null;
    var rawRequiredVersion = pkg && pkg.engines && pkg.engines.node || null;
    var requiredVersion = rawRequiredVersion ? 'v' + rawRequiredVersion : rawRequiredVersion;

@@ -1,5 +1,5 @@
 PORTNAME=	kibana
-DISTVERSION=	9.2.2
+DISTVERSION=	9.2.3
 DISTVERSIONSUFFIX=	-linux-x86_64
 CATEGORIES=	textproc www
 MASTER_SITES=	https://artifacts.elastic.co/downloads/kibana/ \
@@ -13,7 +13,7 @@ WWW=		https://www.elastic.co/products/kibana
 
 LICENSE=	APACHE20
 
-BUILD_DEPENDS=	npm-node22>=11.5.1:www/npm-node22
+BUILD_DEPENDS=	npm-node22>=11.6.4:www/npm-node22
 LIB_DEPENDS=	libre2.so:devel/re2 \
 		libuv.so:devel/libuv
 RUN_DEPENDS=	${LOCALBASE}/bin/node:www/node22
