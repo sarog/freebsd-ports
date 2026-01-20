@@ -99,8 +99,10 @@ post-install:
 	${ECHO} "@sample ${ETCDIR}/roles.yml.sample" >> ${TMPPLIST}
 	${FIND} -s ${STAGEDIR}${PREFIX}/lib/elasticsearch -not -type d | ${SORT} | \
 		${SED} -e 's#^${STAGEDIR}${PREFIX}/##' >> ${TMPPLIST}
+	${ECHO} "@dir lib/elasticsearch/modules/x-pack-ml/platform" >> ${TMPPLIST}
 	${ECHO} "@dir lib/elasticsearch/plugins" >> ${TMPPLIST}
 	${ECHO} "@dir libexec/elasticsearch" >> ${TMPPLIST}
+	${ECHO} "@dir ${ETCDIR}/jvm.options.d" >> ${TMPPLIST}
 	${ECHO} "@dir(${SEARCHUSER},${SEARCHGROUP},0755) ${ETCDIR}" >> ${TMPPLIST}
 	${ECHO} "@owner ${SEARCHUSER}" >> ${TMPPLIST}
 	${ECHO} "@group ${SEARCHGROUP}" >> ${TMPPLIST}
