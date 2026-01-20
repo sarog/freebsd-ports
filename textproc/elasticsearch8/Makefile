@@ -1,6 +1,6 @@
 PORTNAME=	elasticsearch
-DISTVERSIONPREFIX=	v
 PORTVERSION=	8.19.10
+DISTVERSIONPREFIX=	v
 CATEGORIES=	textproc java devel
 MASTER_SITES=	https://github.com/portsbuild/${PORTNAME}/releases/download/${DISTVERSIONFULL}/
 PKGNAMESUFFIX=	8
