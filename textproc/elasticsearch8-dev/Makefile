@@ -1,6 +1,6 @@
 PORTNAME=	elasticsearch
 DISTVERSIONPREFIX=	v
-DISTVERSION=	8.19.11
+DISTVERSION=	8.19.12
 CATEGORIES=	textproc java devel
 PKGNAMESUFFIX=	8
 
@@ -22,13 +22,9 @@ ONLY_FOR_ARCHS=	amd64
 
 BUILD_DEPENDS=	bash:shells/bash \
 				jna>0:devel/jna \
-				gradle>=9.2.1:devel/gradle \
+				gradle>=9.3.1:devel/gradle \
 				${LOCALBASE}/openjdk17/bin/java:java/openjdk17 \
-				${LOCALBASE}/openjdk19/bin/java:java/openjdk19 \
-				${LOCALBASE}/openjdk20/bin/java:java/openjdk20 \
 				${LOCALBASE}/openjdk21/bin/java:java/openjdk21 \
-				${LOCALBASE}/openjdk22/bin/java:java/openjdk22 \
-				${LOCALBASE}/openjdk23/bin/java:java/openjdk23 \
 				${LOCALBASE}/openjdk25/bin/java:java/openjdk25
 RUN_DEPENDS=	bash:shells/bash \
 				jna>0:devel/jna \
@@ -115,17 +111,26 @@ SUB_FILES=	pkg-message
 SUB_LIST=	ETCDIR=${ETCDIR} \
 		JAVA_HOME=${JAVA_HOME} \
 		BINDIR=${PREFIX}/bin \
-		SEARCHUSER=${SEARCHUSER}
+		SEARCHUSER=${SEARCHUSER} \
+		LOCALBASE=${LOCALBASE}
 
 post-extract:
 	${CP} ${PATCHDIR}/public.key ${WRKSRC}/ ## extracted from: x-pack-core-X.XX.X.jar
 
 post-patch:
 	${RM} ${WRKSRC}/gradle/gradle-daemon-jvm.properties
+	${RM} -r ${WRKSRC}/libs/entitlement/src/main19
+	${RM} -r ${WRKSRC}/libs/entitlement/src/main20
+	${RM} -r ${WRKSRC}/libs/native/src/main20
+	${RM} -r ${WRKSRC}/libs/native/src/main22
+	${RM} -r ${WRKSRC}/libs/simdvec/src/main22
+	${RM} -r ${WRKSRC}/libs/entitlement/qa/entitlement-test-plugin/src/main18
+	${RM} -r ${WRKSRC}/libs/entitlement/qa/entitlement-test-plugin/src/main19
+	${RM} -r ${WRKSRC}/libs/entitlement/qa/entitlement-test-plugin/src/main20
 
 do-configure:
 	@${MKDIR} ${WRKDIR}/gradle-home
-	@${ECHO_CMD} "org.gradle.java.installations.paths=${LOCALBASE}/openjdk17,${LOCALBASE}/openjdk19,${LOCALBASE}/openjdk20,${LOCALBASE}/openjdk21,${LOCALBASE}/openjdk22,${LOCALBASE}/openjdk23,${LOCALBASE}/openjdk25" > ${WRKDIR}/gradle-home/gradle.properties
+	@${ECHO_CMD} "org.gradle.java.installations.paths=${LOCALBASE}/openjdk17,${LOCALBASE}/openjdk21,${LOCALBASE}/openjdk25" > ${WRKDIR}/gradle-home/gradle.properties
 
 do-build:
 	cd ${WRKSRC} && ${_GRADLE_RUN} localDistro -D"build.snapshot=false" -D"license.key=public.key"
