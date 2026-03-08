@@ -72,13 +72,31 @@ OPTIONS_DEFAULT=	LIBVEC DOCS
 LIBVEC_DESC=	Build vector library (libvec.so)
 LIBVEC_USES=	compiler:c++17-lang
 
+# to rebuild the deps archive:
+#   1. set DEV_UPDATE_MODE=yes
+#   2. make makesum build
+#   3. upload the *-deps archive
+#   4. set DEV_UPDATE_MODE=no
+#   5. make clean makesum
+
+DEV_UPDATE_MODE=	no
+DEPS_CACHE_DIR=	${WRKDIR}
+
+.if (${DEV_UPDATE_MODE} == "no")
+MASTER_SITES+=	LOCAL/unknown/${PORTNAME}:deps
+DISTFILES+=	${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX}:deps
+GRADLE_ARGS=	--offline
+.endif
+
 # Move Gradle's home below ${WRKDIR} instead of using ${HOME}/.gradle
 _GRADLE_ENV=	GRADLE_USER_HOME=${WRKDIR}/gradle-home \
 				JAVA_TOOLCHAIN_HOME=${LOCALBASE}/openjdk25 \
 				RUNTIME_JAVA_HOME=${LOCALBASE}/openjdk25 \
 				LOCAL_VEC_BINARY_OS=freebsd
 
-_GRADLE_RUN=	${SETENV} ${_GRADLE_ENV} gradle --no-daemon
+_GRADLE_RUN=	${SETENV} ${_GRADLE_ENV} gradle --no-daemon \
+		--project-cache-dir ${DEPS_CACHE_DIR}/gradle-${PORTNAME} \
+		${GRADLE_ARGS} --build-cache
 
 _LOCALDIST=	${WRKSRC}/build/distribution/local/${PORTNAME}-${PORTVERSION}
 
@@ -116,6 +134,10 @@ SUB_LIST=	ETCDIR=${ETCDIR} \
 
 post-extract:
 	${CP} ${PATCHDIR}/public.key ${WRKSRC}/ ## extracted from: x-pack-core-X.XX.X.jar
+.if (${DEV_UPDATE_MODE} == "no")
+	# need a separate extract step because the cache is in /tmp, and not under work/ like with maven
+	@cd ${DEPS_CACHE_DIR} && ${TAR} xzf ${DISTDIR}/${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX}
+.endif
 
 post-patch:
 	${RM} ${WRKSRC}/gradle/gradle-daemon-jvm.properties
@@ -143,6 +165,10 @@ post-build:
 	${REINPLACE_CMD} -e 's|#path.data: /path/to/data|path.data: /var/db/elasticsearch|g' ${_LOCALDIST}/config/elasticsearch.yml
 	${REINPLACE_CMD} -e 's|#path.logs: /path/to/logs|path.logs: /var/log/elasticsearch|g' ${_LOCALDIST}/config/elasticsearch.yml
 	@${PRINTF} "\n# ml is currently not supported on FreeBSD\nxpack.ml.enabled: false\n" >> ${_LOCALDIST}/config/elasticsearch.yml
+.if (${DEV_UPDATE_MODE} == "yes")
+	@cd ${DEPS_CACHE_DIR} && ${TAR} czf ${DISTDIR}/${DIST_SUBDIR}/${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX} gradle-${PORTNAME}
+	@${ECHO} "(!!!) Please upload the deps archive: ${DISTDIR}/${DIST_SUBDIR}/${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX}"
+.endif
 
 do-install:
 	${INSTALL} -d -m 0750 ${STAGEDIR}${PREFIX}/etc/elasticsearch
