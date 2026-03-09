@@ -28,7 +28,7 @@ GH_TUPLE=	nodejs:nan:v${_NODE_NAN_VER}:node_nan \
 USE_CXXSTD=	c++17
 USE_RC_SUBR=	${PORTNAME}
 
-CONFLICTS=	kibana7 kibana8 kibana92
+CONFLICTS=	kibana7 kibana8 kibana92 kibana93
 
 WWWDIR=		${PREFIX}/www/${PORTNAME}${PKGNAMESUFFIX}
 
@@ -126,5 +126,25 @@ post-install:
 	${ECHO} "@dir(www,www) ${WWWDIR}/data" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/plugins" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/logs" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/src/platform/packages/private/analytics" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/src/platform/packages/private/kbn-reporting" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/src/platform/packages/private/shared-ux/page" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/src/platform/packages/shared/content-management" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/src/platform/packages/shared/kbn-management/settings" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/src/platform/packages/shared/react" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/src/platform/packages/shared/serverless" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/src/platform/packages/shared/shared-ux/card" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/src/platform/packages/shared/shared-ux/file" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/src/platform/packages/shared/shared-ux/link" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/src/platform/packages/shared/shared-ux/page" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/src/platform/packages/shared/shared-ux/prompt" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/src/platform/plugins/private" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/src/platform/plugins/shared" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/x-pack/platform/packages/private" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/x-pack/platform/packages/shared" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/x-pack/platform/plugins/private" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/x-pack/solutions/observability/packages" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/x-pack/solutions/search/plugins" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/x-pack/solutions/security/packages" >> ${TMPPLIST}
 
 .include <bsd.port.mk>
