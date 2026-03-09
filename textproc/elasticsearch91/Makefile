@@ -20,7 +20,7 @@ USES=		cpe java:run
 JAVA_VERSION=	21+
 USE_RC_SUBR=	${PORTNAME}
 
-CONFLICTS=	elasticsearch6 elasticsearch7 elasticsearch8 elasticsearch92
+CONFLICTS=	elasticsearch7 elasticsearch8 elasticsearch92 elasticsearch93
 
 NO_ARCH=	yes
 NO_BUILD=	yes
@@ -51,7 +51,7 @@ SEARCHGROUP?=	${SEARCHUSER}
 USERS=		${SEARCHUSER}
 GROUPS=		${SEARCHGROUP}
 
-PORTSCOUT=	limit:^9
+PORTSCOUT=	limit:^9\.1\.\d{1}
 
 SUB_FILES=	pkg-message
 SUB_LIST=	ETCDIR=${ETCDIR} \
@@ -92,23 +92,24 @@ do-install-DOCS-on:
 .endfor
 
 post-install:
-	${ECHO} "@sample ${ETCDIR}/elasticsearch.yml.sample" >> ${TMPPLIST}
-	${ECHO} "@sample ${ETCDIR}/jvm.options.sample" >> ${TMPPLIST}
-	${ECHO} "@sample ${ETCDIR}/log4j2.properties.sample" >> ${TMPPLIST}
-	${ECHO} "@sample ${ETCDIR}/role_mapping.yml.sample" >> ${TMPPLIST}
-	${ECHO} "@sample ${ETCDIR}/roles.yml.sample" >> ${TMPPLIST}
 	${FIND} -s ${STAGEDIR}${PREFIX}/lib/elasticsearch -not -type d | ${SORT} | \
 		${SED} -e 's#^${STAGEDIR}${PREFIX}/##' >> ${TMPPLIST}
 	${ECHO} "@dir lib/elasticsearch/modules/x-pack-ml/platform" >> ${TMPPLIST}
 	${ECHO} "@dir lib/elasticsearch/plugins" >> ${TMPPLIST}
 	${ECHO} "@dir libexec/elasticsearch" >> ${TMPPLIST}
-	${ECHO} "@dir ${ETCDIR}/jvm.options.d" >> ${TMPPLIST}
 	${ECHO} "@dir(${SEARCHUSER},${SEARCHGROUP},0755) ${ETCDIR}" >> ${TMPPLIST}
 	${ECHO} "@owner ${SEARCHUSER}" >> ${TMPPLIST}
 	${ECHO} "@group ${SEARCHGROUP}" >> ${TMPPLIST}
-	${ECHO} "@mode 0640" >> ${TMPPLIST}
+	${ECHO} "@mode 0750" >> ${TMPPLIST}
+	${ECHO} "@dir ${ETCDIR}/jvm.options.d" >> ${TMPPLIST}
+	${ECHO} "@mode 0660" >> ${TMPPLIST}
 	${ECHO} "@sample ${ETCDIR}/users.sample" >> ${TMPPLIST}
 	${ECHO} "@sample ${ETCDIR}/users_roles.sample" >> ${TMPPLIST}
+	${ECHO} "@sample ${ETCDIR}/elasticsearch.yml.sample" >> ${TMPPLIST}
+	${ECHO} "@sample ${ETCDIR}/jvm.options.sample" >> ${TMPPLIST}
+	${ECHO} "@sample ${ETCDIR}/log4j2.properties.sample" >> ${TMPPLIST}
+	${ECHO} "@sample ${ETCDIR}/role_mapping.yml.sample" >> ${TMPPLIST}
+	${ECHO} "@sample ${ETCDIR}/roles.yml.sample" >> ${TMPPLIST}
 	${ECHO} "@mode" >> ${TMPPLIST}
 	${ECHO} "@owner" >> ${TMPPLIST}
 	${ECHO} "@group" >> ${TMPPLIST}
