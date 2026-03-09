@@ -13,22 +13,23 @@ WWW=		https://www.elastic.co/products/kibana
 
 LICENSE=	APACHE20
 
-BUILD_DEPENDS=	npm-node22>=11.6.4:www/npm-node22
+USES=		compiler:c++17-lang cpe nodejs:24,build,run python:build
+
+BUILD_DEPENDS=  npm-node${NODEJS_VERSION}>=11.10.0:www/npm-node${NODEJS_VERSION}
 LIB_DEPENDS=	libre2.so:devel/re2 \
 		libuv.so:devel/libuv
-RUN_DEPENDS=	${LOCALBASE}/bin/node:www/node22
 
-USES=		compiler:c++17-lang cpe nodejs:22,build,run python:build
 CPE_VENDOR=	elastic
+
+USE_CXXSTD=	c++17
 
 USE_GITHUB=	nodefault
 GH_TUPLE=	nodejs:nan:v${_NODE_NAN_VER}:node_nan \
 		uhop:node-re2:${_NODE_RE2_VER}:node_re2
 
-USE_CXXSTD=	c++17
 USE_RC_SUBR=	${PORTNAME}
 
-CONFLICTS=	kibana7 kibana91 kibana92 kibana93
+CONFLICTS=	kibana92 kibana93
 
 WWWDIR=		${PREFIX}/www/${PORTNAME}${PKGNAMESUFFIX}
 
@@ -46,9 +47,9 @@ BINS=	kibana-encryption-keys kibana-health-gateway kibana-keystore \
 
 #######################################################################
 # Set node-nan version here
-_NODE_NAN_VER=	2.22.0
+_NODE_NAN_VER=	2.25.0
 # Set node-re version here
-_NODE_RE2_VER=	1.21.4
+_NODE_RE2_VER=	1.23.3
 #######################################################################
 
 _NODECMD=	${LOCALBASE}/bin/node --version

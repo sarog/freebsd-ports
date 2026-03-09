@@ -15,6 +15,4 @@
    // Actions to apply when validation fails: error report + exit.
    console.error(errorMessage);
    process.exit(1);
--}
-\ No newline at end of file
-+}
+
