@@ -1,9 +1,11 @@
 PORTNAME=	kibana
 DISTVERSION=	8.19.12
 DISTVERSIONSUFFIX=	-linux-x86_64
+PORTREVISION=	1
 CATEGORIES=	textproc www
 MASTER_SITES=	https://artifacts.elastic.co/downloads/kibana/ \
-		http://artifacts.elastic.co/downloads/kibana/
+		http://artifacts.elastic.co/downloads/kibana/ \
+		LOCAL/vvd/kibana
 PKGNAMESUFFIX=	8
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX}
 
@@ -13,23 +15,19 @@ WWW=		https://www.elastic.co/products/kibana
 
 LICENSE=	APACHE20
 
-USES=		compiler:c++17-lang cpe nodejs:24,build,run python:build
-
-BUILD_DEPENDS=  npm-node${NODEJS_VERSION}>=11.10.0:www/npm-node${NODEJS_VERSION}
+BUILD_DEPENDS=	npm-node${NODEJS_VERSION}>=11.10.0:www/npm-node${NODEJS_VERSION}
 LIB_DEPENDS=	libre2.so:devel/re2 \
 		libuv.so:devel/libuv
 
+USES=		compiler:c++17-lang cpe nodejs:24,build,run python:build
 CPE_VENDOR=	elastic
-
 USE_CXXSTD=	c++17
-
 USE_GITHUB=	nodefault
 GH_TUPLE=	nodejs:nan:v${_NODE_NAN_VER}:node_nan \
 		uhop:node-re2:${_NODE_RE2_VER}:node_re2
-
 USE_RC_SUBR=	${PORTNAME}
 
-CONFLICTS=	kibana92 kibana93
+CONFLICTS=	kibana9*
 
 WWWDIR=		${PREFIX}/www/${PORTNAME}${PKGNAMESUFFIX}
 
@@ -43,7 +41,7 @@ SUB_LIST+=	BINDIR=${PREFIX}/bin \
 WRKSRC=		${WRKDIR}/${PORTNAME}-${DISTVERSION}
 
 BINS=	kibana-encryption-keys kibana-health-gateway kibana-keystore \
-		kibana-plugin kibana-setup kibana-verification-code
+	kibana-plugin kibana-setup kibana-verification-code
 
 #######################################################################
 # Set node-nan version here
@@ -115,7 +113,7 @@ do-install:
 	${INSTALL_LIB} ${_RE2DIR}/build/Release/re2.node \
 		${STAGEDIR}${WWWDIR}/node_modules/re2/build/Release/re2.node
 .for f in ${BINS}
-	${INSTALL} -l rs ${STAGEDIR}${WWWDIR}/bin/${f} ${STAGEDIR}${PREFIX}/bin/${f}
+	${RLN} ${STAGEDIR}${WWWDIR}/bin/${f} ${STAGEDIR}${PREFIX}/bin/${f}
 	${ECHO} "bin/${f}" >> ${TMPPLIST}
 .endfor
 
