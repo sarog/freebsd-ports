@@ -125,7 +125,6 @@ post-install:
 	${ECHO} "@dir ${WWWDIR}/logs" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/src/platform/packages/private/analytics" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/src/platform/packages/private/kbn-reporting" >> ${TMPPLIST}
-	${ECHO} "@dir ${WWWDIR}/src/platform/packages/private/shared-ux/page" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/src/platform/packages/shared/content-management" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/src/platform/packages/shared/kbn-management/settings" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/src/platform/packages/shared/react" >> ${TMPPLIST}
@@ -140,8 +139,9 @@ post-install:
 	${ECHO} "@dir ${WWWDIR}/x-pack/platform/packages/private" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/x-pack/platform/packages/shared" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/x-pack/platform/plugins/private" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/x-pack/solutions/chat" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/x-pack/solutions/observability/packages" >> ${TMPPLIST}
-	${ECHO} "@dir ${WWWDIR}/x-pack/solutions/search/plugins" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/x-pack/solutions/search" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/x-pack/solutions/security/packages" >> ${TMPPLIST}
 
 .include <bsd.port.mk>
