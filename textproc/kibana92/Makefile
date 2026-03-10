@@ -13,22 +13,19 @@ WWW=		https://www.elastic.co/products/kibana
 
 LICENSE=	APACHE20
 
-BUILD_DEPENDS=	npm-node22>=11.6.4:www/npm-node22
+BUILD_DEPENDS=	npm-node${NODEJS_VERSION}>=11.10.0:www/npm-node${NODEJS_VERSION}
 LIB_DEPENDS=	libre2.so:devel/re2 \
 		libuv.so:devel/libuv
-RUN_DEPENDS=	${LOCALBASE}/bin/node:www/node22
 
-USES=		compiler:c++17-lang cpe nodejs:22,build,run python:build
+USES=		compiler:c++17-lang cpe nodejs:24,build,run python:build
 CPE_VENDOR=	elastic
-
+USE_CXXSTD=	c++17
 USE_GITHUB=	nodefault
 GH_TUPLE=	nodejs:nan:v${_NODE_NAN_VER}:node_nan \
 		uhop:node-re2:${_NODE_RE2_VER}:node_re2
-
-USE_CXXSTD=	c++17
 USE_RC_SUBR=	${PORTNAME}
 
-CONFLICTS=	kibana7 kibana8 kibana91 kibana93
+CONFLICTS=	kibana8 kibana93
 
 WWWDIR=		${PREFIX}/www/${PORTNAME}${PKGNAMESUFFIX}
 
@@ -42,13 +39,13 @@ SUB_LIST+=	BINDIR=${PREFIX}/bin \
 WRKSRC=		${WRKDIR}/${PORTNAME}-${DISTVERSION}
 
 BINS=	kibana-encryption-keys kibana-health-gateway kibana-keystore \
-		kibana-plugin kibana-setup kibana-verification-code
+	kibana-plugin kibana-setup kibana-verification-code
 
 #######################################################################
 # Set node-nan version here
-_NODE_NAN_VER=	2.22.0
+_NODE_NAN_VER=	2.25.0
 # Set node-re version here
-_NODE_RE2_VER=	1.21.4
+_NODE_RE2_VER=	1.23.3
 #######################################################################
 
 _NODECMD=	${LOCALBASE}/bin/node --version
@@ -114,7 +111,7 @@ do-install:
 	${INSTALL_LIB} ${_RE2DIR}/build/Release/re2.node \
 		${STAGEDIR}${WWWDIR}/node_modules/re2/build/Release/re2.node
 .for f in ${BINS}
-	${INSTALL} -l rs ${STAGEDIR}${WWWDIR}/bin/${f} ${STAGEDIR}${PREFIX}/bin/${f}
+	${RLN} ${STAGEDIR}${WWWDIR}/bin/${f} ${STAGEDIR}${PREFIX}/bin/${f}
 	${ECHO} "bin/${f}" >> ${TMPPLIST}
 .endfor
 
@@ -128,6 +125,7 @@ post-install:
 	${ECHO} "@dir ${WWWDIR}/logs" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/src/platform/packages/private/analytics" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/src/platform/packages/private/kbn-reporting" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/src/platform/packages/private/shared-ux/page" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/src/platform/packages/shared/content-management" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/src/platform/packages/shared/kbn-management/settings" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/src/platform/packages/shared/react" >> ${TMPPLIST}
@@ -142,9 +140,8 @@ post-install:
 	${ECHO} "@dir ${WWWDIR}/x-pack/platform/packages/private" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/x-pack/platform/packages/shared" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/x-pack/platform/plugins/private" >> ${TMPPLIST}
-	${ECHO} "@dir ${WWWDIR}/x-pack/solutions/chat" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/x-pack/solutions/observability/packages" >> ${TMPPLIST}
-	${ECHO} "@dir ${WWWDIR}/x-pack/solutions/search" >> ${TMPPLIST}
+	${ECHO} "@dir ${WWWDIR}/x-pack/solutions/search/plugins" >> ${TMPPLIST}
 	${ECHO} "@dir ${WWWDIR}/x-pack/solutions/security/packages" >> ${TMPPLIST}
 
 .include <bsd.port.mk>
