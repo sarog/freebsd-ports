@@ -20,27 +20,26 @@ LICENSE_PERMS_EL20=	dist-mirror dist-sell pkg-mirror pkg-sell auto-accept
 
 ONLY_FOR_ARCHS=	amd64
 
-BUILD_DEPENDS=	bash:shells/bash \
-				jna>0:devel/jna \
-				gradle>=9.3.1:devel/gradle \
-				${LOCALBASE}/openjdk17/bin/java:java/openjdk17 \
-				${LOCALBASE}/openjdk21/bin/java:java/openjdk21 \
-				${LOCALBASE}/openjdk25/bin/java:java/openjdk25
+BUILD_DEPENDS=	jna>0:devel/jna \
+		gradle>=9.3.1:devel/gradle \
+		${LOCALBASE}/openjdk17/bin/java:java/openjdk17 \
+		${LOCALBASE}/openjdk21/bin/java:java/openjdk21 \
+		${LOCALBASE}/openjdk25/bin/java:java/openjdk25
 RUN_DEPENDS=	bash:shells/bash \
-				jna>0:devel/jna \
-				java:java/openjdk21
+		jna>0:devel/jna \
+		java:java/openjdk21
 
 USES=		cpe java shebangfix
-JAVA_VERSION=	21+
+CPE_VENDOR=	elastic
+JAVA_VERSION=	21
 JAVA_OS=	native
 JAVA_VENDOR=	openjdk
+USE_GITHUB= 	yes
+GH_ACCOUNT= 	elastic
+GH_PROJECT= 	elasticsearch
 USE_RC_SUBR=	${PORTNAME}
 
-CPE_VENDOR=	elastic
-
-USE_GITHUB= yes
-GH_ACCOUNT= elastic
-GH_PROJECT= elasticsearch
+CONFLICTS=	elasticsearch7 elasticsearch9
 
 SHEBANG_FILES=	distribution/src/bin/elasticsearch \
 		distribution/src/bin/elasticsearch-cli \
@@ -64,10 +63,8 @@ SHEBANG_FILES=	distribution/src/bin/elasticsearch \
 		x-pack/plugin/sql/src/main/bin/elasticsearch-sql-cli \
 		x-pack/plugin/watcher/src/main/bin/elasticsearch-croneval
 
-CONFLICTS=	elasticsearch7 elasticsearch91 elasticsearch92 elasticsearch93
-
 OPTIONS_DEFINE=	LIBVEC DOCS
-OPTIONS_DEFAULT=	LIBVEC DOCS
+OPTIONS_DEFAULT=LIBVEC DOCS
 
 LIBVEC_DESC=	Build vector library (libvec.so)
 LIBVEC_USES=	compiler:c++17-lang
@@ -80,7 +77,6 @@ LIBVEC_USES=	compiler:c++17-lang
 #   5. make clean makesum
 
 DEV_UPDATE_MODE=	no
-DEPS_CACHE_DIR=	${WRKDIR}
 
 .if (${DEV_UPDATE_MODE} == "no")
 MASTER_SITES+=	LOCAL/unknown/${PORTNAME}:deps
@@ -89,13 +85,13 @@ GRADLE_ARGS=	--offline
 .endif
 
 # Move Gradle's home below ${WRKDIR} instead of using ${HOME}/.gradle
-_GRADLE_ENV=	GRADLE_USER_HOME=${WRKDIR}/gradle-home \
-				JAVA_TOOLCHAIN_HOME=${LOCALBASE}/openjdk25 \
-				RUNTIME_JAVA_HOME=${LOCALBASE}/openjdk25 \
-				LOCAL_VEC_BINARY_OS=freebsd
+_GRADLE_ENV=	GRADLE_USER_HOME=${WRKDIR}/gradle-${PORTNAME} \
+		JAVA_TOOLCHAIN_HOME=${LOCALBASE}/openjdk25 \
+		RUNTIME_JAVA_HOME=${LOCALBASE}/openjdk25 \
+		LOCAL_VEC_BINARY_OS=freebsd
 
 _GRADLE_RUN=	${SETENV} ${_GRADLE_ENV} gradle --no-daemon \
-		--project-cache-dir ${DEPS_CACHE_DIR}/gradle-${PORTNAME} \
+		--project-cache-dir ${WRKDIR}/gradle-${PORTNAME} \
 		${GRADLE_ARGS} --build-cache
 
 _LOCALDIST=	${WRKSRC}/build/distribution/local/${PORTNAME}-${PORTVERSION}
@@ -135,8 +131,7 @@ SUB_LIST=	ETCDIR=${ETCDIR} \
 post-extract:
 	${CP} ${PATCHDIR}/public.key ${WRKSRC}/ ## extracted from: x-pack-core-X.XX.X.jar
 .if (${DEV_UPDATE_MODE} == "no")
-	# need a separate extract step because the cache is in /tmp, and not under work/ like with maven
-	@cd ${DEPS_CACHE_DIR} && ${TAR} xzf ${DISTDIR}/${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX}
+	@cd ${WRKDIR} && ${TAR} xzf ${DISTDIR}/${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX}
 .endif
 
 post-patch:
@@ -151,8 +146,10 @@ post-patch:
 	${RM} -r ${WRKSRC}/libs/entitlement/qa/entitlement-test-plugin/src/main20
 
 do-configure:
-	@${MKDIR} ${WRKDIR}/gradle-home
-	@${ECHO_CMD} "org.gradle.java.installations.paths=${LOCALBASE}/openjdk17,${LOCALBASE}/openjdk21,${LOCALBASE}/openjdk25" > ${WRKDIR}/gradle-home/gradle.properties
+	@${MKDIR} ${WRKDIR}/gradle-${PORTNAME}
+	@${ECHO_CMD} "org.gradle.java.installations.paths=${LOCALBASE}/openjdk17,${LOCALBASE}/openjdk21,${LOCALBASE}/openjdk25" > ${WRKDIR}/gradle-${PORTNAME}/gradle.properties
+	@${ECHO_CMD} "org.gradle.java.installations.auto-download=false" >> ${WRKDIR}/gradle-${PORTNAME}/gradle.properties
+	@${ECHO_CMD} "org.gradle.projectcachedir=${WRKDIR}/gradle-${PORTNAME}" >> ${WRKDIR}/gradle-${PORTNAME}/gradle.properties
 
 do-build:
 	cd ${WRKSRC} && ${_GRADLE_RUN} localDistro -D"build.snapshot=false" -D"license.key=public.key"
@@ -166,8 +163,8 @@ post-build:
 	${REINPLACE_CMD} -e 's|#path.logs: /path/to/logs|path.logs: /var/log/elasticsearch|g' ${_LOCALDIST}/config/elasticsearch.yml
 	@${PRINTF} "\n# ml is currently not supported on FreeBSD\nxpack.ml.enabled: false\n" >> ${_LOCALDIST}/config/elasticsearch.yml
 .if (${DEV_UPDATE_MODE} == "yes")
-	@cd ${DEPS_CACHE_DIR} && ${TAR} czf ${DISTDIR}/${DIST_SUBDIR}/${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX} gradle-${PORTNAME}
-	@${ECHO} "(!!!) Please upload the deps archive: ${DISTDIR}/${DIST_SUBDIR}/${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX}"
+	@cd ${WRKDIR} && ${TAR} czf ${DISTDIR}/${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX} gradle-${PORTNAME}
+	@${ECHO} "(!!!) Please upload the deps archive: ${DISTDIR}/${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX}"
 .endif
 
 do-install:
