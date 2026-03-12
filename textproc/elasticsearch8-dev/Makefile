@@ -130,6 +130,7 @@ SUB_LIST=	ETCDIR=${ETCDIR} \
 
 post-extract:
 	${CP} ${PATCHDIR}/public.key ${WRKSRC}/ ## extracted from: x-pack-core-X.XX.X.jar
+	${CP} ${PATCHDIR}/branches.json ${WRKSRC}/
 .if (${DEV_UPDATE_MODE} == "no")
 	@cd ${WRKDIR} && ${TAR} xzf ${DISTDIR}/${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX}
 .endif
