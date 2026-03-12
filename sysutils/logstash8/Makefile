@@ -2,7 +2,8 @@ PORTNAME=	logstash
 PORTVERSION=	8.19.12
 DISTVERSIONSUFFIX=	-darwin-x86_64
 CATEGORIES=	sysutils java
-MASTER_SITES=	https://artifacts.elastic.co/downloads/logstash/
+MASTER_SITES=	https://artifacts.elastic.co/downloads/logstash/ \
+		LOCAL/vvd/elastic
 PKGNAMESUFFIX=	8
 
 MAINTAINER=	elastic@FreeBSD.org
@@ -15,29 +16,33 @@ ONLY_FOR_ARCHS=	aarch64 amd64
 
 RUN_DEPENDS=	${LOCALBASE}/bin/bash:shells/bash
 
-USES=		cpe shebangfix java:run
-
+USES=		cpe java shebangfix
 CPE_VENDOR=	elastic
 JAVA_VERSION=	21+
-
-USE_RC_SUBR=	logstash
+USE_RC_SUBR=	${PORTNAME}
 
 SHEBANG_FILES=	bin/*
 
-CONFLICTS=	logstash6 logstash7 logstash91 logstash92 logstash93
+CONFLICTS=	${PORTNAME}7 ${PORTNAME}9*
 
 NO_BUILD=	yes
-
 PORTSCOUT=	limit:^8
-
 SUB_FILES=	pkg-message
 SUB_LIST=	JAVA_HOME=${JAVA_HOME} \
-		LOGSTASH_HOME=${LOGSTASH_HOME}
+		LOGSTASH_HOME=${LOGSTASH_HOME} \
+		LOGSTASH_USER=${LOGUSER} \
+		LOGSTASH_GROUP=${LOGGROUP}
 
 WRKSRC=		${WRKDIR}/${PORTNAME}-${DISTVERSION}
 
-USERS=		logstash
-GROUPS=		logstash
+LOGUSER?=	${PORTNAME}
+LOGGROUP?=	${LOGUSER}
+.if ${LOGUSER} == ${PORTNAME}
+USERS=		${LOGUSER}
+.endif
+.if ${LOGGROUP} == ${PORTNAME}
+GROUPS=		${LOGGROUP}
+.endif
 
 LOGSTASH_CONF_FILES=		jvm.options log4j2.properties logstash.yml \
 				pipelines.yml startup.options
