@@ -69,11 +69,11 @@ OPTIONS_DEFAULT=LIBVEC DOCS
 LIBVEC_DESC=	Build vector library (libvec.so)
 LIBVEC_USES=	compiler:c++17-lang
 
-# to rebuild the deps archive:
-#   1. set DEV_UPDATE_MODE=yes
+# To rebuild the deps archive:
+#   1. Set DEV_UPDATE_MODE=yes
 #   2. make makesum build
-#   3. upload the *-deps archive
-#   4. set DEV_UPDATE_MODE=no
+#   3. Upload the *-deps archive
+#   4. Set DEV_UPDATE_MODE=no
 #   5. make clean makesum
 
 DEV_UPDATE_MODE=	no
@@ -164,7 +164,9 @@ post-build:
 	${REINPLACE_CMD} -e 's|#path.logs: /path/to/logs|path.logs: /var/log/elasticsearch|g' ${_LOCALDIST}/config/elasticsearch.yml
 	@${PRINTF} "\n# ml is currently not supported on FreeBSD\nxpack.ml.enabled: false\n" >> ${_LOCALDIST}/config/elasticsearch.yml
 .if (${DEV_UPDATE_MODE} == "yes")
-	@cd ${WRKDIR} && ${TAR} czf ${DISTDIR}/${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX} gradle-${PORTNAME}
+	# https://docs.gradle.org/current/userguide/dependency_caching.html#sec:cache-copy
+	@cd ${WRKDIR} && ${TAR} czf ${DISTDIR}/${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX} \
+		gradle-${PORTNAME}/caches/modules-2/files-2.1 gradle-${PORTNAME}/caches/modules-2/metadata-2.107
 	@${ECHO} "(!!!) Please upload the deps archive: ${DISTDIR}/${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX}"
 .endif
 
