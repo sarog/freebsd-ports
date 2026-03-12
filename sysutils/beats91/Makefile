@@ -14,9 +14,7 @@ LICENSE=	APACHE20
 
 USES=		go:modules
 USE_GITHUB=	yes
-
 GH_ACCOUNT=	elastic
-
 USE_RC_SUBR=	${GO_TARGET:C,\./,,g}
 
 GO_MODULE=	github.com/elastic/beats/v7
@@ -24,7 +22,7 @@ CGO_CFLAGS=	-I.
 CGO_LDFLAGS=	-L.
 MAKE_ENV+=	GOBUILD_FLAGS="-mod=vendor"
 
-CONFLICTS=	beats6 beats7 beats8 beats92
+CONFLICTS=	beats8 beats92 beats93
 
 PORTSCOUT=	limit:^9\.1\.\d{1}
 
