@@ -14,24 +14,28 @@ LICENSE=	APACHE20
 
 ONLY_FOR_ARCHS=	aarch64 amd64
 
-RUN_DEPENDS=	${LOCALBASE}/bin/bash:shells/bash
+RUN_DEPENDS=	bash:shells/bash
 
 USES=		cpe java:run shebangfix
 CPE_VENDOR=	elastic
-JAVA_VERSION=	21+
+JAVA_VERSION=	25 21 17
 USE_RC_SUBR=	${PORTNAME}
 
 SHEBANG_FILES=	bin/*
 
 CONFLICTS=	${PORTNAME}7 ${PORTNAME}8 ${PORTNAME}91 ${PORTNAME}93
 
+EXTRACT_AFTER_ARGS=	--exclude jdk.app \
+			--exclude *.bat \
+			--no-same-owner --no-same-permissions
+
 NO_BUILD=	yes
 PORTSCOUT=	limit:^9\.2\.\d{1}
 SUB_FILES=	pkg-message
 SUB_LIST=	JAVA_HOME=${JAVA_HOME} \
 		LOGSTASH_HOME=${LOGSTASH_HOME} \
-		LOGSTASH_USER=${LOGUSER} \
-		LOGSTASH_GROUP=${LOGGROUP}
+		LOGUSER=${LOGUSER} \
+		LOGGROUP=${LOGGROUP}
 
 WRKSRC=		${WRKDIR}/${PORTNAME}-${DISTVERSION}
 
@@ -51,15 +55,11 @@ LOGSTASH_JRUBY_BIN_FILES=	ast gem irb jgem jirb jirb_swing jruby \
 				jruby.sh jrubyc rake rdoc ri
 LOGSTASH_JRUBY_SUBDIR=		vendor/jruby/bin
 
-post-extract:
-	${RM} -rf ${WRKSRC}/jdk.app
-
 post-patch:
 	${REINPLACE_CMD} 's|%%ETCDIR%%|${ETCDIR}|g' ${WRKSRC}/config/logstash.yml
 	${FIND} ${WRKSRC} -name '*.orig' -delete
 
 do-install:
-	${FIND} ${WRKSRC} -name '*.bat' -delete
 	${MKDIR} ${STAGEDIR}${ETCDIR}
 	${INSTALL_DATA} ${FILESDIR}/logstash.conf.sample ${STAGEDIR}${ETCDIR}
 .for x in ${LOGSTASH_CONF_FILES}
@@ -67,10 +67,8 @@ do-install:
 .endfor
 	${RM} -rf ${WRKSRC}/config
 	(cd ${WRKSRC} && ${COPYTREE_SHARE} . ${STAGEDIR}${LOGSTASH_HOME})
-	${CHMOD} ${BINMODE} ${STAGEDIR}${LOGSTASH_HOME}/bin/*
-.for x in ${LOGSTASH_JRUBY_BIN_FILES}
-	${CHMOD} ${BINMODE} ${STAGEDIR}${LOGSTASH_HOME}/${LOGSTASH_JRUBY_SUBDIR}/${x}
-.endfor
+	${CHMOD} ${BINMODE} ${STAGEDIR}${LOGSTASH_HOME}/bin/* \
+		${LOGSTASH_JRUBY_BIN_FILES:S|^|${STAGEDIR}${LOGSTASH_HOME}/${LOGSTASH_JRUBY_SUBDIR}/|}
 	${FIND} ${STAGEDIR}${LOGSTASH_HOME}/vendor/bundle/jruby/3.1.0/gems \
 	        ${STAGEDIR}${LOGSTASH_HOME}/vendor/bundle/jruby/3.1.0/plugins \
 		${STAGEDIR}${LOGSTASH_HOME}/vendor/jruby/lib/ruby/gems/shared/gems \
@@ -89,6 +87,6 @@ post-install:
 	${ECHO} "@dir logstash/vendor/jruby/lib/ruby/gems/shared/cache" >> ${TMPPLIST}
 	${FIND} -s ${STAGEDIR}${LOGSTASH_HOME} -not -type d | ${SORT} | \
 		${SED} -e 's#^${STAGEDIR}${PREFIX}/##' >> ${TMPPLIST}
-	${ECHO} "@dir(logstash,logstash,) logstash/data" >> ${TMPPLIST}
+	${ECHO} "@dir(${LOGUSER},${LOGGROUP},) logstash/data" >> ${TMPPLIST}
 
 .include <bsd.port.mk>

@@ -54,8 +54,8 @@ load_rc_config ${name}
 logdir="/var/log"
 
 : ${logstash_enable="NO"}
-: ${logstash_user="%%LOGSTASH_USER%%"}
-: ${logstash_group="%%LOGSTASH_GROUP%%"}
+: ${logstash_user="%%LOGUSER%%"}
+: ${logstash_group="%%LOGGROUP%%"}
 : ${logstash_home="%%LOGSTASH_HOME%%"}
 : ${logstash_config="%%ETCDIR%%"}
 : ${logstash_log="YES"}
