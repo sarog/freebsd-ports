@@ -20,7 +20,7 @@ USES=		cpe java:run
 JAVA_VERSION=	21+
 USE_RC_SUBR=	${PORTNAME}
 
-CONFLICTS=	elasticsearch7 elasticsearch91 elasticsearch92 elasticsearch93
+CONFLICTS=	elasticsearch7 elasticsearch9
 
 NO_ARCH=	yes
 NO_BUILD=	yes
