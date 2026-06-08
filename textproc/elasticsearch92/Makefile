@@ -1,5 +1,5 @@
 PORTNAME=	elasticsearch
-PORTVERSION=	9.2.6
+PORTVERSION=	9.2.8
 DISTVERSIONPREFIX=	v
 CATEGORIES=	textproc java devel
 MASTER_SITES=	https://github.com/portsbuild/${PORTNAME}/releases/download/${DISTVERSIONFULL}/
@@ -20,7 +20,7 @@ USES=		cpe java:run
 JAVA_VERSION=	25+
 USE_RC_SUBR=	${PORTNAME}
 
-CONFLICTS=	elasticsearch7 elasticsearch8 elasticsearch91 elasticsearch93
+CONFLICTS=	elasticsearch7 elasticsearch8 elasticsearch91 elasticsearch93 elasticsearch94
 
 NO_ARCH=	yes
 NO_BUILD=	yes
@@ -56,7 +56,9 @@ PORTSCOUT=	limit:^9\.2\.\d{1}
 SUB_FILES=	pkg-message
 SUB_LIST=	ETCDIR=${ETCDIR} \
 		JAVA_HOME=${JAVA_HOME} \
-		BINDIR=${PREFIX}/bin
+		BINDIR=${PREFIX}/bin \
+		SEARCHUSER=${SEARCHUSER} \
+		LOCALBASE=${LOCALBASE}
 
 post-patch:
 	${RM} ${WRKSRC}/modules/repository-azure/jna-5*.jar
