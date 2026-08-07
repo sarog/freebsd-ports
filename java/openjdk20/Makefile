@@ -14,7 +14,7 @@ WWW=		https://openjdk.java.net/projects/jdk/20/
 LICENSE=	GPLv2
 
 DEPRECATED=	No longer supported by upstream
-EXPIRATION_DATE=	2026-03-12
+#EXPIRATION_DATE=	2026-03-12
 
 ONLY_FOR_ARCHS=	aarch64 amd64 i386 powerpc64 powerpc64le
 
@@ -39,7 +39,7 @@ USE_XORG=	x11 xext xi xrandr xrender xt xtst
 CPE_VENDOR=	oracle
 
 USE_GITHUB=	yes
-GH_ACCOUNT=	battleblow
+GH_ACCOUNT=	portsbuild
 GH_PROJECT=	jdk20u
 
 NO_CCACHE=	yes

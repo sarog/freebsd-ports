@@ -1,23 +1,31 @@
 PORTNAME=	openjdk
 DISTVERSIONPREFIX=	jdk-
 DISTVERSION=	${JDK_MAJOR_VERSION}.${JDK_MINOR_VERSION}.${JDK_PATCH_VERSION}+${JDK_BUILD_NUMBER}-${BSD_JDK_VERSION}
-PORTREVISION=	5
+PORTREVISION=	2
 CATEGORIES=	java devel
 PKGNAMESUFFIX?=	${JDK_MAJOR_VERSION}
+MASTER_SITES=	LOCAL/openjdk:boot
+DISTFILES=	${BOOTSTRAPJDKFILE}:boot
 
 MAINTAINER=	java@FreeBSD.org
-COMMENT?=	Java Development Kit ${JDK_MAJOR_VERSION}
-WWW=		https://openjdk.java.net/projects/jdk/18/
+COMMENT=	Java Development Kit ${JDK_MAJOR_VERSION}
+WWW=		https://openjdk.java.net/projects/jdk/23/
 
 LICENSE=	GPLv2
 
 DEPRECATED=	No longer supported by upstream
-#EXPIRATION_DATE=	2026-01-12
+#EXPIRATION_DATE=	2026-05-12
 
 ONLY_FOR_ARCHS=	aarch64 amd64 i386 powerpc64 powerpc64le
 
+# On FreeBSD 14 and 15 the i386 build fails with a segfault in java during the
+# buildtools_create_symbols_javac__the.COMPILE_CREATE_SYMBOLS_batch build step.
+#
+BROKEN_FreeBSD_13_i386=	Build failed for target 'images' in configuration 'bsd-x86-server-release'
+BROKEN_FreeBSD_14_i386=	Build failed for target 'images' in configuration 'bsd-x86-server-release'
+BROKEN_FreeBSD_15_i386=	Build failed for target 'images' in configuration 'bsd-x86-server-release'
+
 BUILD_DEPENDS=	zip:archivers/zip \
-		autoconf>0:devel/autoconf \
 		${LOCALBASE}/include/cups/cups.h:print/cups \
 		bash:shells/bash \
 		gsed:textproc/gsed
@@ -31,32 +39,30 @@ LIB_DEPENDS=	libasound.so:audio/alsa-lib \
 RUN_DEPENDS=	javavm:java/javavmwrapper \
 		xorg-fonts-truetype>0:x11-fonts/xorg-fonts-truetype
 
-USES=		compiler:features cpe gmake iconv jpeg pkgconfig xorg
+USES=	autoreconf:build compiler:features cpe gmake iconv jpeg pkgconfig xorg
 USE_XORG=	x11 xext xi xrandr xrender xt xtst
 
 CPE_VENDOR=	oracle
 
 USE_GITHUB=	yes
-GH_ACCOUNT=	portsbuild
-GH_PROJECT=	jdk18u
+GH_ACCOUNT=	freebsd
+GH_PROJECT=	openjdk
+GH_TAGNAME=	jdk-23.0.2+7-freebsd-2
 
 NO_CCACHE=	yes
 
 # Suppress passing -j to do-build target via Mk/bsd.port.mk
 # In the JDK build the number of parallel jobs is passed in via configure --with-num-cores=N
-_MAKE_JOBS=
-MAKE_ENV=	LANG="C" \
-		LC_ALL="C" \
-		CLASSPATH="" \
+_MAKE_JOBS=	#
+MAKE_ENV=	CLASSPATH="" \
 		JAVA_HOME="" \
 		LD_LIBRARY_PATH="" \
-		CC=${CC} \
-		CXX=${CXX} \
-		CPP=${CPP} \
 		LOG=cmdlines \
 		MAKEFLAGS=""
 
-JDK_OSARCH=	bsd-${ARCH:S/amd64/x86_64/:S/i386/x86/:S/powerpc64/ppc64/}
+JDK_ARCH=	${ARCH:S/amd64/x86_64/:S/i386/x86/:S/powerpc64/ppc64/}
+BOOTSTRAPJDKFILE=	openjdk23-23.0.2+7.2_1.${JDK_ARCH}.tar.xz
+JDK_OSARCH=	bsd-${JDK_ARCH}
 JDK_BUILDDIR=	${WRKSRC}/build/${JDK_OSARCH}-${JDK_BUILD_JVM}-${JDK_BUILD_TYPE}
 .if defined(BUILD_JRE)
 JDK_IMAGEDIR=	${JDK_BUILDDIR}/images/jre
@@ -64,32 +70,27 @@ JDK_IMAGEDIR=	${JDK_BUILDDIR}/images/jre
 JDK_IMAGEDIR=	${JDK_BUILDDIR}/images/jdk
 .endif
 INSTALLDIR=	${PREFIX}/${PKGBASE}
+BOOTSTRAPJDKDIR=	${WRKDIR}/boot-jdk
 
 NOPRECIOUSMAKEVARS=	yes
 
-JDK_MAJOR_VERSION=	18
+JDK_MAJOR_VERSION=	23
 JDK_MINOR_VERSION=	0
 JDK_PATCH_VERSION=	2
-JDK_BUILD_NUMBER=	9
-BSD_JDK_VERSION=	1
+JDK_BUILD_NUMBER=	7
+BSD_JDK_VERSION=	2
 
 JDK_BUG_URL=	https://bugs.freebsd.org/bugzilla/enter_bug.cgi?product=Ports%20%26%20Packages&component=Individual%20Port(s)&short_desc=java/${PORTNAME}${JDK_MAJOR_VERSION}%3A%20
 
 GNU_CONFIGURE=	yes
-CONFIGURE_ENV=	CC=${CC} \
-		CXX=${CXX} \
-		CPP=${CPP} \
-		ac_cv_path_SED=${LOCALBASE}/bin/gsed
+CONFIGURE_ENV=	ac_cv_path_SED=${LOCALBASE}/bin/gsed
 CONFIGURE_ARGS=	--with-boot-jdk=${BOOTSTRAPJDKDIR} \
 		--disable-ccache \
 		--disable-javac-server \
-		--disable-hotspot-gtest \
 		--with-alsa=${LOCALBASE} \
 		--with-cups=${LOCALBASE} \
 		--with-fontconfig=${LOCALBASE} \
 		--with-freetype=system \
-		--with-freetype-include=${LOCALBASE}/include/freetype2 \
-		--with-freetype-lib=${LOCALBASE}/lib \
 		--with-libjpeg=system \
 		--with-giflib=system \
 		--with-giflib-include=${LOCALBASE}/include \
@@ -120,35 +121,6 @@ JDK_BUILD_TYPE=		release
 
 .include <bsd.port.pre.mk>
 
-# portsfallout.com shows flapping builds on 13.5 and 14.2
-.if ${OPSYS} == FreeBSD && ${OSVERSION} < 1403000
-MAKE_JOBS_UNSAFE=	yes
-.endif
-
-BOOTSTRAP_JDKS=	${LOCALBASE}/openjdk18
-.if ${ARCH} == aarch64 || ${ARCH} == amd64 || ${ARCH} == i386 || ${ARCH:Mpowerpc64*}
-BOOTSTRAP_JDKS+=	${LOCALBASE}/bootstrap-openjdk17
-.endif
-BOOTSTRAP_JDKS+=	${LOCALBASE}/openjdk17
-
-# do we have valid native jdk installed?
-.for BJDK in ${BOOTSTRAP_JDKS}
-.  if !defined(BOOTSTRAPJDKDIR) && exists(${BJDK}/bin/javac)
-BOOTSTRAPJDKDIR=	${BJDK}
-.  endif
-.endfor
-
-# if no valid jdk found, set dependency
-.if !defined(BOOTSTRAPJDKDIR)
-.  if ${ARCH} == aarch64 || ${ARCH} == amd64 || ${ARCH} == i386 || ${ARCH:Mpowerpc64*}
-BOOTSTRAPJDKDIR?=	${LOCALBASE}/bootstrap-openjdk17
-BUILD_DEPENDS+=		${BOOTSTRAPJDKDIR}/bin/javac:java/bootstrap-openjdk17
-.  else
-BOOTSTRAPJDKDIR?=	${LOCALBASE}/openjdk17
-BUILD_DEPENDS+=		${BOOTSTRAPJDKDIR}/bin/javac:java/openjdk17
-.  endif
-.endif
-
 JDK_BUILD_JVM=	server
 
 MAKE_ENV+=		--with-toolchain-type=${COMPILER_TYPE}
@@ -164,7 +136,7 @@ CONFIGURE_ARGS+=	--with-extra-ldflags="-Wl,-rpath=${LOCALBASE}/lib/gcc${GCC_DEFA
 MAKE_ENV+=	USE_CLANG=true
 EXTRA_CFLAGS+=		-Wno-unused-but-set-parameter
 EXTRA_CFLAGS+=		-Wno-bitwise-instead-of-logical
-EXTRA_CFLAGS+=		-Wno-deprecated-non-prototype
+EXTRA_CFLAGS+=		-Wno-error=deprecated-non-prototype
 CONFIGURE_ARGS+=	--with-extra-cflags="${EXTRA_CFLAGS}"
 CONFIGURE_ARGS+=	--with-extra-cxxflags="${EXTRA_CFLAGS}"
 .endif
@@ -172,7 +144,6 @@ CONFIGURE_ARGS+=	--with-extra-cxxflags="${EXTRA_CFLAGS}"
 .if ${ARCH} == aarch64
 CONFIGURE_ARGS+=	--with-boot-jdk-jvmargs=-XX:-UseCompressedClassPointers --disable-dtrace
 MAKE_ENV+=		JAVA_TOOL_OPTIONS="-XX:-UseCompressedClassPointers"
-EXTRA_PATCHES=		${PATCHDIR}/extra-patch-src_hotspot_share_runtime_arguments.cpp
 .endif
 
 .if empty(ICONV_LIB)
@@ -184,6 +155,10 @@ ICONV_LIBS=	${ICONV_LIB}
 .endif
 
 post-patch:
+	@${RM} ${WRKSRC}/src/hotspot/os_cpu/bsd_ppc/thread_bsd_ppc.cpp
+	@${MV} ${WRKSRC}/src/hotspot/os_cpu/bsd_ppc/thread_bsd_ppc.hpp \
+		${WRKSRC}/src/hotspot/os_cpu/bsd_ppc/javaThread_bsd_ppc.hpp
+
 	@${FIND} ${WRKSRC} -name '*.orig' -delete
 	@${CHMOD} 755 ${WRKSRC}/configure
 	@${REINPLACE_CMD} -e 's|%%LOCALBASE%%|${LOCALBASE}|' \
@@ -193,6 +168,12 @@ post-patch:
 		-e 's|%%ICONV_LDFLAGS%%|${ICONV_LDFLAGS}|' \
 		-e 's|%%ICONV_LIBS%%|${ICONV_LIBS}|' \
 		${WRKSRC}/make/autoconf/libraries.m4
+
+post-build:
+.if defined(OPENJDK_SYMLINK_CACERTS)
+	@${RM} ${JDK_IMAGEDIR}/lib/security/cacerts
+	@${LN} -sf ${OPENJDK_SYMLINK_CACERTS} ${JDK_IMAGEDIR}/lib/security/cacerts
+.endif
 
 do-install:
 	@${MKDIR} ${STAGEDIR}${INSTALLDIR}
