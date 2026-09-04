@@ -1,0 +1,248 @@
+PORTNAME=	elasticsearch
+DISTVERSIONPREFIX=	v
+DISTVERSION=	8.19.20
+CATEGORIES=	textproc java devel
+PKGNAMESUFFIX=	8
+
+MAINTAINER=	elastic@FreeBSD.org
+COMMENT=	Distributed, RESTful search and analytics engine
+WWW=		https://www.elastic.co/
+
+LICENSE=	APACHE20 AGPLv3 SSPLv1 EL20
+LICENSE_COMB=	multi
+LICENSE_NAME_SSPLv1=	Server Side Public License v1
+LICENSE_NAME_EL20=	Elastic License 2.0
+LICENSE_FILE_SSPLv1=	${WRKSRC}/licenses/AGPL-3.0+SSPL-1.0+ELASTIC-LICENSE-2.0.txt
+LICENSE_FILE_EL20=	${WRKSRC}/licenses/ELASTIC-LICENSE-2.0.txt
+LICENSE_FILE=	${WRKSRC}/LICENSE.txt
+LICENSE_PERMS_SSPLv1=	dist-mirror dist-sell pkg-mirror pkg-sell auto-accept
+LICENSE_PERMS_EL20=	dist-mirror dist-sell pkg-mirror pkg-sell auto-accept
+
+ONLY_FOR_ARCHS=	amd64
+
+BUILD_DEPENDS=	jna>0:devel/jna \
+		gradle>=9.6.1:devel/gradle \
+		${LOCALBASE}/openjdk17/bin/java:java/openjdk17 \
+		${LOCALBASE}/openjdk21/bin/java:java/openjdk21 \
+		${LOCALBASE}/openjdk25/bin/java:java/openjdk25
+RUN_DEPENDS=	bash:shells/bash \
+		jna>0:devel/jna \
+		java:java/openjdk25
+
+USES=		cpe java shebangfix
+CPE_VENDOR=	elastic
+JAVA_VERSION=	25
+JAVA_OS=	native
+JAVA_VENDOR=	openjdk
+USE_GITHUB= 	yes
+GH_ACCOUNT= 	elastic
+GH_PROJECT= 	elasticsearch
+USE_RC_SUBR=	${PORTNAME}
+
+CONFLICTS=	elasticsearch9*
+
+SHEBANG_FILES=	distribution/src/bin/elasticsearch \
+		distribution/src/bin/elasticsearch-cli \
+		distribution/src/bin/elasticsearch-env \
+		distribution/src/bin/elasticsearch-env-from-file \
+		distribution/src/bin/elasticsearch-geoip \
+		distribution/src/bin/elasticsearch-keystore \
+		distribution/src/bin/elasticsearch-node \
+		distribution/src/bin/elasticsearch-plugin \
+		distribution/src/bin/elasticsearch-shard \
+		x-pack/plugin/security/src/main/bin/elasticsearch-certgen \
+		x-pack/plugin/security/src/main/bin/elasticsearch-certutil \
+		x-pack/plugin/security/src/main/bin/elasticsearch-create-enrollment-token \
+		x-pack/plugin/security/src/main/bin/elasticsearch-reconfigure-node \
+		x-pack/plugin/security/src/main/bin/elasticsearch-reset-password \
+		x-pack/plugin/security/src/main/bin/elasticsearch-saml-metadata \
+		x-pack/plugin/security/src/main/bin/elasticsearch-service-tokens \
+		x-pack/plugin/security/src/main/bin/elasticsearch-setup-passwords \
+		x-pack/plugin/security/src/main/bin/elasticsearch-syskeygen \
+		x-pack/plugin/security/src/main/bin/elasticsearch-users \
+		x-pack/plugin/sql/src/main/bin/elasticsearch-sql-cli \
+		x-pack/plugin/watcher/src/main/bin/elasticsearch-croneval
+
+OPTIONS_DEFINE=	LIBVEC DOCS
+OPTIONS_DEFAULT=LIBVEC DOCS
+
+LIBVEC_DESC=	Build vector library (libvec.so)
+LIBVEC_USES=	compiler:c++17-lang
+
+# To rebuild the deps archive:
+#   1. Set DEV_UPDATE_MODE=yes
+#   2. make makesum build
+#   3. Upload the *-deps archive
+#   4. Set DEV_UPDATE_MODE=no
+#   5. make clean makesum
+
+DEV_UPDATE_MODE=	yes
+
+.if (${DEV_UPDATE_MODE} == "no")
+MASTER_SITES+=	LOCAL/unknown/${PORTNAME}:deps
+DISTFILES+=	${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX}:deps
+GRADLE_ARGS=	--offline
+.endif
+
+# Move Gradle's home below ${WRKDIR} instead of using ${HOME}/.gradle
+_GRADLE_ENV=	GRADLE_USER_HOME=${WRKDIR}/gradle-${PORTNAME} \
+		JAVA_TOOLCHAIN_HOME=${LOCALBASE}/openjdk25 \
+		RUNTIME_JAVA_HOME=${LOCALBASE}/openjdk25 \
+		LOCAL_VEC_BINARY_OS=true \
+		LOCAL_ZSTD_BINARY=true
+
+_GRADLE_RUN=	${SETENV} ${_GRADLE_ENV} gradle --no-daemon \
+		--project-cache-dir ${WRKDIR}/gradle-${PORTNAME} \
+		--build-cache --no-scan
+
+_LOCALDIST=	${WRKSRC}/build/distribution/local/${PORTNAME}-${PORTVERSION}
+
+.include <bsd.port.options.mk>
+
+CONFIG_FILES=	elasticsearch.yml jvm.options log4j2.properties \
+		role_mapping.yml roles.yml
+BINS=		elasticsearch elasticsearch-certgen elasticsearch-certutil \
+		elasticsearch-cli elasticsearch-create-enrollment-token \
+		elasticsearch-croneval elasticsearch-env \
+		elasticsearch-env-from-file elasticsearch-geoip \
+		elasticsearch-keystore elasticsearch-node elasticsearch-plugin \
+		elasticsearch-reconfigure-node elasticsearch-reset-password \
+		elasticsearch-saml-metadata elasticsearch-service-tokens \
+		elasticsearch-setup-passwords elasticsearch-shard \
+		elasticsearch-sql-cli elasticsearch-sql-cli-${DISTVERSION}.jar \
+		elasticsearch-syskeygen elasticsearch-users
+
+PORTDOCS=	LICENSE.txt NOTICE.txt README.asciidoc
+
+SIGAR_ARCH=	${ARCH:S|i386|x86|}
+SEARCHUSER?=	elasticsearch
+SEARCHGROUP?=	${SEARCHUSER}
+USERS=		${SEARCHUSER}
+GROUPS=		${SEARCHGROUP}
+
+PORTSCOUT=	limit:^8
+
+SUB_FILES=	pkg-message
+SUB_LIST=	ETCDIR=${ETCDIR} \
+		JAVA_HOME=${JAVA_HOME} \
+		BINDIR=${PREFIX}/bin \
+		SEARCHUSER=${SEARCHUSER} \
+		LOCALBASE=${LOCALBASE}
+
+post-extract:
+	${CP} ${PATCHDIR}/public.key ${WRKSRC}/ ## extracted from: x-pack-core-X.XX.X.jar
+	${CP} ${PATCHDIR}/branches.json ${WRKSRC}/
+.if (${DEV_UPDATE_MODE} == "no")
+	@cd ${WRKDIR} && ${TAR} xzf ${DISTDIR}/${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX}
+.endif
+
+post-patch:
+	${RM} ${WRKSRC}/gradle/gradle-daemon-jvm.properties
+	${RM} -r ${WRKSRC}/libs/entitlement/src/main19
+	${RM} -r ${WRKSRC}/libs/entitlement/src/main20
+	${RM} -r ${WRKSRC}/libs/entitlement/src/main26
+	${RM} -r ${WRKSRC}/libs/entitlement/src/main27
+	${RM} -r ${WRKSRC}/libs/entitlement/qa/entitlement-test-plugin/src/main18
+	${RM} -r ${WRKSRC}/libs/entitlement/qa/entitlement-test-plugin/src/main19
+	${RM} -r ${WRKSRC}/libs/entitlement/qa/entitlement-test-plugin/src/main20
+	${RM} -r ${WRKSRC}/libs/entitlement/qa/entitlement-test-plugin/src/main26
+
+do-configure:
+	@${MKDIR} ${WRKDIR}/gradle-${PORTNAME}
+	@${ECHO_CMD} "org.gradle.java.installations.paths=${LOCALBASE}/openjdk17,${LOCALBASE}/openjdk21,${LOCALBASE}/openjdk25" > ${WRKDIR}/gradle-${PORTNAME}/gradle.properties
+	@${ECHO_CMD} "org.gradle.java.installations.auto-download=false" >> ${WRKDIR}/gradle-${PORTNAME}/gradle.properties
+	@${ECHO_CMD} "org.gradle.console=plain" >> ${WRKDIR}/gradle-${PORTNAME}/gradle.properties
+	@${ECHO_CMD} "org.gradle.caching=true" >> ${WRKDIR}/gradle-${PORTNAME}/gradle.properties
+	@${ECHO_CMD} "org.gradle.daemon=false" >> ${WRKDIR}/gradle-${PORTNAME}/gradle.properties
+	@${ECHO_CMD} "org.gradle.projectcachedir=${WRKDIR}/gradle-${PORTNAME}" >> ${WRKDIR}/gradle-${PORTNAME}/gradle.properties
+
+do-build:
+	cd ${WRKSRC} && ${_GRADLE_RUN} ${GRADLE_ARGS} localDistro -Dbuild.snapshot=false -Dlicense.key=public.key -Dfreebsd.override.jdk=true
+
+post-build:
+	${RM} ${_LOCALDIST}/modules/repository-azure/jna-5*.jar
+	${REINPLACE_CMD} -e 's|hs_err_pid%p.log|$${ES_TMPDIR}/hs_err_pid%p.log|g' ${_LOCALDIST}/config/jvm.options
+	${REINPLACE_CMD} -e 's|gc.log|$${ES_TMPDIR}/gc.log|g' ${_LOCALDIST}/config/jvm.options
+	@${PRINTF} "\n## Path to native libraries\n-Des.nativelibs.path=${LOCALBASE}/lib\n" >> ${_LOCALDIST}/config/jvm.options
+	${REINPLACE_CMD} -e 's|#path.data: /path/to/data|path.data: /var/db/elasticsearch|g' ${_LOCALDIST}/config/elasticsearch.yml
+	${REINPLACE_CMD} -e 's|#path.logs: /path/to/logs|path.logs: /var/log/elasticsearch|g' ${_LOCALDIST}/config/elasticsearch.yml
+	@${PRINTF} "\n# ml is currently not supported on FreeBSD\nxpack.ml.enabled: false\n" >> ${_LOCALDIST}/config/elasticsearch.yml
+.if (${DEV_UPDATE_MODE} == "yes")
+	# https://docs.gradle.org/current/userguide/dependency_caching.html#sec:cache-copy
+	@cd ${WRKDIR} && ${TAR} czf ${DISTDIR}/${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX} \
+		gradle-${PORTNAME}/caches/modules-2/files-2.1 gradle-${PORTNAME}/caches/modules-2/metadata-2.107
+	@${ECHO} "(!!!) Please upload the deps archive: ${DISTDIR}/${PORTNAME}-${DISTVERSION}-deps${EXTRACT_SUFX}"
+.endif
+
+do-install:
+	${INSTALL} -d -m 0750 ${STAGEDIR}${PREFIX}/etc/elasticsearch
+.for f in ${CONFIG_FILES}
+	${INSTALL} ${_LOCALDIST}/config/${f} ${STAGEDIR}${ETCDIR}/${f}.sample
+.endfor
+	${MKDIR} ${STAGEDIR}${PREFIX}/lib/elasticsearch/bin
+.for f in ${BINS}
+	${INSTALL_SCRIPT} ${_LOCALDIST}/bin/${f} ${STAGEDIR}${PREFIX}/lib/elasticsearch/bin
+	${RLN} ${STAGEDIR}${PREFIX}/lib/elasticsearch/bin/${f} ${STAGEDIR}${PREFIX}/bin/${f}
+	${ECHO_CMD} "bin/${f}" >> ${TMPPLIST}
+.endfor
+	${MKDIR} ${STAGEDIR}${PREFIX}/lib/elasticsearch/lib
+	(cd ${_LOCALDIST}/lib && ${COPYTREE_SHARE} . ${STAGEDIR}${PREFIX}/lib/elasticsearch/lib/ "-name *\.jar")
+	${MKDIR} ${STAGEDIR}${PREFIX}/lib/elasticsearch/modules
+	(cd ${_LOCALDIST}/modules && ${COPYTREE_SHARE} . ${STAGEDIR}${PREFIX}/lib/elasticsearch/modules/)
+	${MKDIR} ${STAGEDIR}${PREFIX}/lib/elasticsearch/plugins
+	${MKDIR} ${STAGEDIR}${PREFIX}/libexec/elasticsearch
+	${INSTALL} -lrs ${STAGEDIR}${ETCDIR} ${STAGEDIR}${PREFIX}/lib/elasticsearch/config
+	${LN} -s ${JAVASHAREDIR}/classes/jna.jar ${STAGEDIR}${PREFIX}/lib/elasticsearch/lib/jna-0.0.0.jar
+	${MKDIR} ${STAGEDIR}${ETCDIR}/jvm.options.d
+	${TOUCH} ${STAGEDIR}${ETCDIR}/users.sample ${STAGEDIR}${ETCDIR}/users_roles.sample
+
+do-test:
+	cd ${WRKSRC} && ${_GRADLE_RUN} test -Dbuild.snapshot=false -Dlicense.key=x-pack/license-tools/src/test/resources/public.key \
+		-Dtests.haltonfailure=false -Dtests.es.xpack.ml.enabled=false -Dtests.bwc.git_fetch_latest=false \
+		-Dtests.jvm.argline="--add-modules=jdk.incubator.vector --enable-native-access=ALL-UNNAMED -Dbuild.snapshot=false -Dlicense.key=x-pack/license-tools/src/test/resources/public.key -Dfreebsd.tests.skipTestTimeoutPerConnection=true" \
+		-Dfreebsd.override.jdk=true -Dfreebsd.tests.skipTestTimeoutPerConnection=true
+
+post-build-LIBVEC-on:
+	@${PRINTF} "\n-Dorg.elasticsearch.nativeaccess.enableVectorLibrary=true\n" >> ${_LOCALDIST}/config/jvm.options
+
+post-build-LIBVEC-off:
+	@${PRINTF} "\n-Dorg.elasticsearch.nativeaccess.enableVectorLibrary=false\n" >> ${_LOCALDIST}/config/jvm.options
+
+do-build-LIBVEC-on:
+	@cd ${WRKSRC}/libs/simdvec/native && \
+		${_GRADLE_RUN} buildSharedLibrary
+
+do-install-LIBVEC-on:
+	${INSTALL_LIB} ${WRKSRC}/libs/simdvec/native/build/libs/vec/shared/amd64/libvec.so ${STAGEDIR}${PREFIX}/lib/
+	${ECHO} "${PREFIX}/lib/libvec.so" >> ${TMPPLIST}
+
+do-install-DOCS-on:
+	${MKDIR} ${STAGEDIR}${DOCSDIR}
+.for f in ${PORTDOCS}
+	${INSTALL_DATA} ${WRKSRC}/${f} ${STAGEDIR}${DOCSDIR}
+.endfor
+
+post-install:
+	${FIND} -s ${STAGEDIR}${PREFIX}/lib/elasticsearch -not -type d | ${SORT} | \
+		${SED} -e 's#^${STAGEDIR}${PREFIX}/##' >> ${TMPPLIST}
+	${ECHO} "@dir lib/elasticsearch/modules/x-pack-ml/platform" >> ${TMPPLIST}
+	${ECHO} "@dir lib/elasticsearch/plugins" >> ${TMPPLIST}
+	${ECHO} "@dir libexec/elasticsearch" >> ${TMPPLIST}
+	${ECHO} "@dir(${SEARCHUSER},${SEARCHGROUP},0755) ${ETCDIR}" >> ${TMPPLIST}
+	${ECHO} "@owner ${SEARCHUSER}" >> ${TMPPLIST}
+	${ECHO} "@group ${SEARCHGROUP}" >> ${TMPPLIST}
+	${ECHO} "@mode 0750" >> ${TMPPLIST}
+	${ECHO} "@dir ${ETCDIR}/jvm.options.d" >> ${TMPPLIST}
+	${ECHO} "@mode 0660" >> ${TMPPLIST}
+	${ECHO} "@sample ${ETCDIR}/users.sample" >> ${TMPPLIST}
+	${ECHO} "@sample ${ETCDIR}/users_roles.sample" >> ${TMPPLIST}
+	${ECHO} "@sample ${ETCDIR}/elasticsearch.yml.sample" >> ${TMPPLIST}
+	${ECHO} "@sample ${ETCDIR}/jvm.options.sample" >> ${TMPPLIST}
+	${ECHO} "@sample ${ETCDIR}/log4j2.properties.sample" >> ${TMPPLIST}
+	${ECHO} "@sample ${ETCDIR}/role_mapping.yml.sample" >> ${TMPPLIST}
+	${ECHO} "@sample ${ETCDIR}/roles.yml.sample" >> ${TMPPLIST}
+	${ECHO} "@mode" >> ${TMPPLIST}
+	${ECHO} "@owner" >> ${TMPPLIST}
+	${ECHO} "@group" >> ${TMPPLIST}
+
+.include <bsd.port.mk>
