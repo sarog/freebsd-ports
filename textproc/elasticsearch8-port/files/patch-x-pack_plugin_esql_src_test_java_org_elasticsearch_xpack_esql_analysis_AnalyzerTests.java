@@ -1,6 +1,6 @@
---- x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/AnalyzerTests.java.orig	2026-08-05 21:29:08 UTC
+--- x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/AnalyzerTests.java.orig	2026-08-26 20:47:40 UTC
 +++ x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/AnalyzerTests.java
-@@ -2365,6 +2365,8 @@ public class AnalyzerTests extends ESTestCase {
+@@ -2398,6 +2398,8 @@ public class AnalyzerTests extends ESTestCase {
      }
  
      public void testDenseVectorImplicitCasting() {

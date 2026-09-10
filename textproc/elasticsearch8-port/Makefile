@@ -1,6 +1,6 @@
 PORTNAME=	elasticsearch
 DISTVERSIONPREFIX=	v
-DISTVERSION=	8.19.20
+DISTVERSION=	8.19.21
 CATEGORIES=	textproc java devel
 PKGNAMESUFFIX=	8
 
@@ -21,7 +21,7 @@ LICENSE_PERMS_EL20=	dist-mirror dist-sell pkg-mirror pkg-sell auto-accept
 ONLY_FOR_ARCHS=	amd64
 
 BUILD_DEPENDS=	jna>0:devel/jna \
-		gradle>=9.6.1:devel/gradle \
+		gradle>=9.7.1:devel/gradle \
 		${LOCALBASE}/openjdk17/bin/java:java/openjdk17 \
 		${LOCALBASE}/openjdk21/bin/java:java/openjdk21 \
 		${LOCALBASE}/openjdk25/bin/java:java/openjdk25

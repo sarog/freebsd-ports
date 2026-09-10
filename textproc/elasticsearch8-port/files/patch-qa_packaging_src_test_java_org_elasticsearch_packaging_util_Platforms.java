@@ -1,4 +1,4 @@
---- qa/packaging/src/test/java/org/elasticsearch/packaging/util/Platforms.java.orig	2026-08-05 21:29:08 UTC
+--- qa/packaging/src/test/java/org/elasticsearch/packaging/util/Platforms.java.orig	2026-08-26 20:47:40 UTC
 +++ qa/packaging/src/test/java/org/elasticsearch/packaging/util/Platforms.java
 @@ -18,6 +18,7 @@ public class Platforms {
      public static final boolean LINUX = OS_NAME.startsWith("Linux");
@@ -8,7 +8,7 @@
      public static final PlatformAction NO_ACTION = () -> {};
  
      public static String getOsRelease() {
-@@ -82,6 +83,12 @@ public class Platforms {
+@@ -85,6 +86,12 @@ public class Platforms {
  
      public static void onDPKG(PlatformAction action) throws Exception {
          if (isDPKG()) {
