@@ -1,5 +1,5 @@
 PORTNAME=	elasticsearch
-PORTVERSION=	9.4.2
+PORTVERSION=	9.4.8
 DISTVERSIONPREFIX=	v
 CATEGORIES=	textproc java devel
 MASTER_SITES=	https://github.com/portsbuild/${PORTNAME}/releases/download/${DISTVERSIONFULL}/
@@ -25,7 +25,7 @@ JAVA_OS=	native
 JAVA_VENDOR=	openjdk
 USE_RC_SUBR=	${PORTNAME}
 
-CONFLICTS=	elasticsearch7 elasticsearch8 elasticsearch91 elasticsearch92 elasticsearch93
+CONFLICTS=	elasticsearch8 elasticsearch91 elasticsearch92 elasticsearch93
 
 NO_ARCH=	yes
 NO_BUILD=	yes
