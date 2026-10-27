@@ -1,4 +1,4 @@
---- build-tools-internal/src/integTest/groovy/org/elasticsearch/gradle/internal/info/GlobalBuildInfoPluginFuncTest.groovy.orig	2026-09-04 20:42:02 UTC
+--- build-tools-internal/src/integTest/groovy/org/elasticsearch/gradle/internal/info/GlobalBuildInfoPluginFuncTest.groovy.orig	2026-10-27 19:16:11 UTC
 +++ build-tools-internal/src/integTest/groovy/org/elasticsearch/gradle/internal/info/GlobalBuildInfoPluginFuncTest.groovy
 @@ -0,0 +1,204 @@
 +/*

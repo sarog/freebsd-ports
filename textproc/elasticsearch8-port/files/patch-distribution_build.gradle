@@ -1,24 +1,24 @@
---- distribution/build.gradle.orig	2026-08-05 21:29:08 UTC
+--- distribution/build.gradle.orig	2026-09-30 15:29:31 UTC
 +++ distribution/build.gradle
-@@ -266,7 +266,7 @@ configure(subprojects.findAll { ['archives', 'packages
+@@ -278,7 +278,7 @@ configure(subprojects.findAll { ['archives', 'packages
      String preReleaseVersionString = String.format("%d-%s+%d", runtimeJavaMajorVersion, preReleaseType, buildNumber);
  
      project.jdks {
 -      ['darwin', 'windows', 'linux'].each { platform ->
 +      ['darwin', 'windows', 'linux', 'freebsd'].each { platform ->
-         (platform == 'linux' || platform == 'darwin' ? ['x64', 'aarch64'] : ['x64']).each { architecture ->
+         architecturesFor(platform).each { architecture ->
            "bundled_${platform}_${architecture}" {
              it.version = preReleaseVersionString;
-@@ -281,7 +281,7 @@ configure(subprojects.findAll { ['archives', 'packages
+@@ -293,7 +293,7 @@ configure(subprojects.findAll { ['archives', 'packages
    } else {
      // Setup all required JDKs
      project.jdks {
 -      ['darwin', 'windows', 'linux'].each { platform ->
-+    ['darwin', 'windows', 'linux', 'freebsd'].each { platform ->
-         (platform == 'linux' || platform == 'darwin' ? ['x64', 'aarch64'] : ['x64']).each { architecture ->
++      ['darwin', 'windows', 'linux', 'freebsd'].each { platform ->
+         architecturesFor(platform).each { architecture ->
            "bundled_${platform}_${architecture}" {
              it.platform = platform
-@@ -417,7 +417,7 @@ configure(subprojects.findAll { ['archives', 'packages
+@@ -429,7 +429,7 @@ configure(subprojects.findAll { ['archives', 'packages
              it.permissions.unix(0644)
            }
          }

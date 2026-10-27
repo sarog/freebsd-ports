@@ -1,6 +1,6 @@
 PORTNAME=	elasticsearch
 DISTVERSIONPREFIX=	v
-DISTVERSION=	8.19.21
+DISTVERSION=	8.19.23
 CATEGORIES=	textproc java devel
 PKGNAMESUFFIX=	8
 
@@ -63,11 +63,8 @@ SHEBANG_FILES=	distribution/src/bin/elasticsearch \
 		x-pack/plugin/sql/src/main/bin/elasticsearch-sql-cli \
 		x-pack/plugin/watcher/src/main/bin/elasticsearch-croneval
 
-OPTIONS_DEFINE=	LIBVEC DOCS
-OPTIONS_DEFAULT=LIBVEC DOCS
-
-LIBVEC_DESC=	Build vector library (libvec.so)
-LIBVEC_USES=	compiler:c++17-lang
+OPTIONS_DEFINE=	DOCS
+OPTIONS_DEFAULT= DOCS
 
 # To rebuild the deps archive:
 #   1. Set DEV_UPDATE_MODE=yes
@@ -76,7 +73,7 @@ LIBVEC_USES=	compiler:c++17-lang
 #   4. Set DEV_UPDATE_MODE=no
 #   5. make clean makesum
 
-DEV_UPDATE_MODE=	yes
+DEV_UPDATE_MODE=	no
 
 .if (${DEV_UPDATE_MODE} == "no")
 MASTER_SITES+=	LOCAL/unknown/${PORTNAME}:deps
@@ -164,6 +161,7 @@ post-build:
 	${REINPLACE_CMD} -e 's|hs_err_pid%p.log|$${ES_TMPDIR}/hs_err_pid%p.log|g' ${_LOCALDIST}/config/jvm.options
 	${REINPLACE_CMD} -e 's|gc.log|$${ES_TMPDIR}/gc.log|g' ${_LOCALDIST}/config/jvm.options
 	@${PRINTF} "\n## Path to native libraries\n-Des.nativelibs.path=${LOCALBASE}/lib\n" >> ${_LOCALDIST}/config/jvm.options
+	@${PRINTF} "\n-Dorg.elasticsearch.nativeaccess.enableVectorLibrary=false\n" >> ${_LOCALDIST}/config/jvm.options
 	${REINPLACE_CMD} -e 's|#path.data: /path/to/data|path.data: /var/db/elasticsearch|g' ${_LOCALDIST}/config/elasticsearch.yml
 	${REINPLACE_CMD} -e 's|#path.logs: /path/to/logs|path.logs: /var/log/elasticsearch|g' ${_LOCALDIST}/config/elasticsearch.yml
 	@${PRINTF} "\n# ml is currently not supported on FreeBSD\nxpack.ml.enabled: false\n" >> ${_LOCALDIST}/config/elasticsearch.yml
@@ -195,26 +193,6 @@ do-install:
 	${LN} -s ${JAVASHAREDIR}/classes/jna.jar ${STAGEDIR}${PREFIX}/lib/elasticsearch/lib/jna-0.0.0.jar
 	${MKDIR} ${STAGEDIR}${ETCDIR}/jvm.options.d
 	${TOUCH} ${STAGEDIR}${ETCDIR}/users.sample ${STAGEDIR}${ETCDIR}/users_roles.sample
-
-do-test:
-	cd ${WRKSRC} && ${_GRADLE_RUN} test -Dbuild.snapshot=false -Dlicense.key=x-pack/license-tools/src/test/resources/public.key \
-		-Dtests.haltonfailure=false -Dtests.es.xpack.ml.enabled=false -Dtests.bwc.git_fetch_latest=false \
-		-Dtests.jvm.argline="--add-modules=jdk.incubator.vector --enable-native-access=ALL-UNNAMED -Dbuild.snapshot=false -Dlicense.key=x-pack/license-tools/src/test/resources/public.key -Dfreebsd.tests.skipTestTimeoutPerConnection=true" \
-		-Dfreebsd.override.jdk=true -Dfreebsd.tests.skipTestTimeoutPerConnection=true
-
-post-build-LIBVEC-on:
-	@${PRINTF} "\n-Dorg.elasticsearch.nativeaccess.enableVectorLibrary=true\n" >> ${_LOCALDIST}/config/jvm.options
-
-post-build-LIBVEC-off:
-	@${PRINTF} "\n-Dorg.elasticsearch.nativeaccess.enableVectorLibrary=false\n" >> ${_LOCALDIST}/config/jvm.options
-
-do-build-LIBVEC-on:
-	@cd ${WRKSRC}/libs/simdvec/native && \
-		${_GRADLE_RUN} buildSharedLibrary
-
-do-install-LIBVEC-on:
-	${INSTALL_LIB} ${WRKSRC}/libs/simdvec/native/build/libs/vec/shared/amd64/libvec.so ${STAGEDIR}${PREFIX}/lib/
-	${ECHO} "${PREFIX}/lib/libvec.so" >> ${TMPPLIST}
 
 do-install-DOCS-on:
 	${MKDIR} ${STAGEDIR}${DOCSDIR}

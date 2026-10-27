@@ -1,6 +1,6 @@
---- distribution/archives/build.gradle.orig	2026-08-05 21:29:08 UTC
+--- distribution/archives/build.gradle.orig	2026-09-30 15:29:31 UTC
 +++ distribution/archives/build.gradle
-@@ -37,7 +37,7 @@ CopySpec archiveFiles(String distributionType, String 
+@@ -39,7 +39,7 @@ CopySpec archiveFiles(String distributionType, String 
          with binFiles(distributionType, isTestDistro)
        }
        into("darwin".equals(os) ? 'jdk.app' : 'jdk') {
@@ -9,7 +9,7 @@
            with jdkFiles(project, os, architecture)
          }
        }
-@@ -108,6 +108,13 @@ distribution_archives {
+@@ -112,6 +112,13 @@ distribution_archives {
      archiveClassifier = 'darwin-aarch64'
      content {
        archiveFiles('tar', 'darwin', 'aarch64', false)

@@ -1,4 +1,4 @@
---- x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/optimizer/rules/logical/DeduplicateAggsTests.java.orig	2026-08-05 21:29:08 UTC
+--- x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/optimizer/rules/logical/DeduplicateAggsTests.java.orig	2026-09-30 15:29:31 UTC
 +++ x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/optimizer/rules/logical/DeduplicateAggsTests.java
 @@ -8,6 +8,7 @@ import org.elasticsearch.common.lucene.BytesRefs;
  package org.elasticsearch.xpack.esql.optimizer.rules.logical;

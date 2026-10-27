@@ -1,4 +1,4 @@
---- modules/transport-netty4/src/test/java/org/elasticsearch/transport/netty4/SimpleNetty4TransportTests.java.orig	2026-08-05 21:29:08 UTC
+--- modules/transport-netty4/src/test/java/org/elasticsearch/transport/netty4/SimpleNetty4TransportTests.java.orig	2026-09-30 15:29:31 UTC
 +++ modules/transport-netty4/src/test/java/org/elasticsearch/transport/netty4/SimpleNetty4TransportTests.java
 @@ -99,7 +99,10 @@ public class SimpleNetty4TransportTests extends Abstra
      }

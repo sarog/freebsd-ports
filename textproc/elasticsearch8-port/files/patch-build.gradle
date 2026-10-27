@@ -1,6 +1,6 @@
---- build.gradle.orig	2026-08-05 21:29:08 UTC
+--- build.gradle.orig	2026-09-30 15:29:31 UTC
 +++ build.gradle
-@@ -496,6 +496,10 @@ tasks.named("updateDaemonJvm") {
+@@ -489,6 +489,10 @@ tasks.named("updateDaemonJvm") {
        org.gradle.platform.Architecture.AARCH64,
        org.gradle.platform.OperatingSystem.WINDOWS
      ),
@@ -11,7 +11,7 @@
      // anyone still using x86 osx?
      BuildPlatformFactory.of(
        org.gradle.platform.Architecture.X86_64,
-@@ -504,7 +508,7 @@ tasks.named("updateDaemonJvm") {
+@@ -497,7 +501,7 @@ tasks.named("updateDaemonJvm") {
    ]
    toolchainPlatforms.set(myPlatforms)
    languageVersion = JavaLanguageVersion.of(21)

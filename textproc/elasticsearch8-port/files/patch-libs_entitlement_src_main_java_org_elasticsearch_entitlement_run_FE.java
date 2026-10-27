@@ -1,4 +1,4 @@
---- libs/entitlement/src/main/java/org/elasticsearch/entitlement/runtime/policy/entitlements/FilesEntitlement.java.orig	2026-08-05 21:29:08 UTC
+--- libs/entitlement/src/main/java/org/elasticsearch/entitlement/runtime/policy/entitlements/FilesEntitlement.java.orig	2026-09-30 15:29:31 UTC
 +++ libs/entitlement/src/main/java/org/elasticsearch/entitlement/runtime/policy/entitlements/FilesEntitlement.java
 @@ -172,8 +172,10 @@ public record FilesEntitlement(List<FileData> filesDat
              return Platform.MACOS;
